@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \DB;
-
-class UserController extends Controller
+class TestController extends Controller
 {
-
-    
+    //测试方法
+    public function test()
+    {
+        //
+        echo "1";
+        $res = DB::table('test')->first();
+        dd($res);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +22,7 @@ class UserController extends Controller
     public function index()
     {
         //
-        echo "1";
+        echo "index";
     }
 
     /**
@@ -28,7 +33,7 @@ class UserController extends Controller
     public function create()
     {
         //
-        echo "create";
+         echo "create";
     }
 
     /**

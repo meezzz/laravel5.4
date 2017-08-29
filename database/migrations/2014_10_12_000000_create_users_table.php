@@ -13,14 +13,42 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
+//        Schema::create('users', function (Blueprint $table) {
+//                $table->increments('id');
+//                $table->string('username');
+//                $table->string('email');
+//                $table->integer('country_id');
+//                $table->string('password');
+//                $table->timestamps();
+//            });
+        if(!Schema::hasTable('users')){
+            Schema::create('users', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('username');
+                $table->string('email');
+                $table->integer('country_id');
+                $table->string('password');
+                $table->integer('mobile');
+                $table->timestamps();
+            });
+        }else{
+            Schema::table('users', function ($table) {
+                if(!Schema::hasColumn('id'))
+                    $table->increments('id');
+                if(!Schema::hasColumn('username'))
+                    $table->string('username');
+                if(!Schema::hasColumn('email'))
+                    $table->string('email');
+                if(!Schema::hasColumn('country_id'))
+                    $table->integer('country_id');
+                if(!Schema::hasColumn('password'))
+                    $table->string('password');
+                if(!Schema::hasColumn('mobile'))
+                    $table->integer('mobile');
+                if(!Schema::hasColumn('address'))
+                    $table->string('address');
+            });
+        }
     }
 
     /**
