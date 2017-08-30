@@ -27,6 +27,9 @@
     /**************     admin start    ***************************/
     //admin 后台首页
     Route::get('/admin', 'Admin\AdminController@index');
+    //用户管理
+    Route::get('/admin/user/add', 'Admin\UserController@add');
+    Route::get('/admin/user/index', 'Admin\UserController@index');
 
     /**************     admin end    ***************************/
 
