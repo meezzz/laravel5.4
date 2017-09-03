@@ -4,11 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \DB;
+use App\Model\User;
 
 class UserController extends Controller
 {
 
-    
+    //模型关联
+    public function relation(){
+        $user =  User::find(1);
+        $res = $user->userinfo()->first();
+        $res = $user->userinfo;
+        //一对多关联
+        $res = $user->post()->where('id','=',22)->get();
+        $res = $user->post; //没有附加操作可以直接这样用属性
+        //属于关系
+        $res = $user->country()->get();
+        $res = $user->country;
+        //多对多关系
+        $res = $user->group()->get();
+        dd($res);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +32,7 @@ class UserController extends Controller
     public function index()
     {
         //
-        echo "1";
+
     }
 
     /**

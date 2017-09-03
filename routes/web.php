@@ -19,8 +19,11 @@ Route::get('/', function () {
 Route::resource('test', 'TestController');
 
 //UserController
-Route::resource('user', 'UserController');
-Route::get('user/test', 'UserController@test');
+Route::get('/user/test', 'UserController@test');
+Route::get('/user/relation', 'UserController@relation');
+Route::resource('/user', 'UserController');
+
+
 
 
 
