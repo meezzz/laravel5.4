@@ -230,15 +230,15 @@
                     <li>
                         <a href="#"><i class="icon-list"></i> 用户管理</a>
                         <ul class="closed">
-                            <li><a href="{{url('/user/add')}}">用户添加</a></li>
-                            <li><a href="{{url('/user')}}">用户列表</a></li>
+                            <li><a href="{{url('/admin/user/add')}}">用户添加</a></li>
+                            <li><a href="{{url('/admin/user/index')}}">用户列表</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="#"><i class="icon-list"></i> 分类管理</a>
                         <ul class="closed">
-                            <li><a href="{{url('/cate/create')}}">分类添加</a></li>
-                            <li><a href="{{url('/cate/show')}}">分类列表</a></li>
+                            <li><a href="{{url('/admin/cate/create')}}">分类添加</a></li>
+                            <li><a href="{{url('/admin/cate/show')}}">分类列表</a></li>
                         </ul>
                     </li>
                 </ul>

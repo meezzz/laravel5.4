@@ -21,6 +21,7 @@ class CreateBlogUsersTable extends Migration
             $table->rememberToken();
             $table->string('profile')->comment('头像路径');
             $table->text('intro')->comment('个人介绍');
+            $table->softDeletes()->comment('软删除');
             $table->timestamps();
         });
     }

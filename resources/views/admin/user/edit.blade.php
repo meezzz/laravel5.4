@@ -17,7 +17,7 @@
     </div>
 	@endif
     <div class="mws-panel-body no-padding">
-    	<form class="mws-form" action="{{url('/user/update')}}" method="post" enctype="multipart/form-data">
+    	<form class="mws-form" action="{{url('/admin/user/doedit')}}" method="post" enctype="multipart/form-data">
     		<div class="mws-form-inline">
     			<div class="mws-form-row">
     				<label class="mws-form-label">用户名</label>

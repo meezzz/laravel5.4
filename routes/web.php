@@ -31,7 +31,9 @@
     Route::get('/admin/user/add', 'Admin\UserController@add');
     Route::post('/admin/user/doadd', 'Admin\UserController@doadd');
     Route::get('/admin/user/index', 'Admin\UserController@index');
-
+    Route::get('/admin/user/edit/{id}', 'Admin\UserController@edit');
+    Route::post('/admin/user/doedit', 'Admin\UserController@doedit');
+    Route::get('/admin/user/delete/{id}', 'Admin\UserController@delete');
     /**************     admin end    ***************************/
 
 

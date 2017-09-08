@@ -1,5 +1,5 @@
 @extends('layout.admin')
 
 @section('content')
-    fdfd
+   1
 @endsection
