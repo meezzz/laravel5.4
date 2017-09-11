@@ -39,7 +39,7 @@
     Route::resource('/admin/cate', 'Admin\CateController');
     /**************     admin end    ***************************/
     /************************   workman   ****************************/
-    
+    Route::get('/workman/test/test', 'Workman\TestController@test');
     /************************   workman   ****************************/
 
 
