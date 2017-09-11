@@ -34,7 +34,17 @@
     Route::get('/admin/user/edit/{id}', 'Admin\UserController@edit');
     Route::post('/admin/user/doedit', 'Admin\UserController@doedit');
     Route::get('/admin/user/delete/{id}', 'Admin\UserController@delete');
+
+    //分类
+    Route::resource('/admin/cate', 'Admin\CateController');
     /**************     admin end    ***************************/
+    /************************   workman   ****************************/
+    
+    /************************   workman   ****************************/
+
+
+
+
 
 
 
