@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+
+<!-- Viewport Metatag -->
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- Plugin Stylesheets first to ease overrides -->
+<link rel="stylesheet" type="text/css" href="http://laravel5.4.cn/admins/plugins/colorpicker/colorpicker.css" media="screen">
+<link rel="stylesheet" type="text/css" href="http://laravel5.4.cn/admins/custom-plugins/wizard/wizard.css" media="screen">
+
+<!-- Required Stylesheets -->
+<link rel="stylesheet" type="text/css" href="http://laravel5.4.cn/admins/bootstrap/css/bootstrap.min.css" media="screen">
+<link rel="stylesheet" type="text/css" href="http://laravel5.4.cn/admins/css/fonts/ptsans/stylesheet.css" media="screen">
+<link rel="stylesheet" type="text/css" href="http://laravel5.4.cn/admins/css/fonts/icomoon/style.css" media="screen">
+
+<link rel="stylesheet" type="text/css" href="http://laravel5.4.cn/admins/css/mws-style.css" media="screen">
+<link rel="stylesheet" type="text/css" href="http://laravel5.4.cn/admins/css/icons/icol16.css" media="screen">
+<link rel="stylesheet" type="text/css" href="http://laravel5.4.cn/admins/css/icons/icol32.css" media="screen">
+
+<!-- Demo Stylesheet -->
+<link rel="stylesheet" type="text/css" href="http://laravel5.4.cn/admins/css/demo.css" media="screen">
+
+<!-- jQuery-UI Stylesheet -->
+<link rel="stylesheet" type="text/css" href="http://laravel5.4.cn/admins/jui/css/jquery.ui.all.css" media="screen">
+<link rel="stylesheet" type="text/css" href="http://laravel5.4.cn/admins/jui/jquery-ui.custom.css" media="screen">
+
+<!-- Theme Stylesheet -->
+<link rel="stylesheet" type="text/css" href="http://laravel5.4.cn/admins/css/mws-theme.css" media="screen">
+<link rel="stylesheet" type="text/css" href="http://laravel5.4.cn/admins/css/themer.css" media="screen">
+<link rel="stylesheet" href="http://laravel5.4.cn/admins/css/main.css">
+
+<title></title>
+
+</head>
+
+<body>
+	<!-- Header -->
+	<div id="mws-header" class="clearfix">
+    
+    	<!-- Logo Container -->
+    	<div id="mws-logo-container">
+        
+        	<!-- Logo Wrapper, images put within this wrapper will always be vertically centered -->
+        	<div id="mws-logo-wrap">
+                <span style="color:white;font-size:20px;font-family:microsoft yahei">Ours Logo</span>
+			</div>
+        </div>
+        
+        <!-- User Tools (notifications, logout, profile, change password) -->
+        <div id="mws-user-tools" class="clearfix">
+        
+        	<!-- Notifications -->
+        	<div id="mws-user-notif" class="mws-dropdown-menu">
+            	<a href="#" data-toggle="dropdown" class="mws-dropdown-trigger"><i class="icon-exclamation-sign"></i></a>
+                
+                <!-- Unread notification count -->
+                <span class="mws-dropdown-notif">35</span>
+                
+                <!-- Notifications dropdown -->
+                <div class="mws-dropdown-box">
+                	<div class="mws-dropdown-content">
+                        <ul class="mws-notifications">
+                        	<li class="read">
+                            	<a href="#">
+                                    <span class="message">
+                                        Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
+                                    </span>
+                                    <span class="time">
+                                        January 21, 2012
+                                    </span>
+                                </a>
+                            </li>
+                        	<li class="read">
+                            	<a href="#">
+                                    <span class="message">
+                                        Lorem ipsum dolor sit amet
+                                    </span>
+                                    <span class="time">
+                                        January 21, 2012
+                                    </span>
+                                </a>
+                            </li>
+                        	<li class="unread">
+                            	<a href="#">
+                                    <span class="message">
+                                        Lorem ipsum dolor sit amet
+                                    </span>
+                                    <span class="time">
+                                        January 21, 2012
+                                    </span>
+                                </a>
+                            </li>
+                        	<li class="unread">
+                            	<a href="#">
+                                    <span class="message">
+                                        Lorem ipsum dolor sit amet
+                                    </span>
+                                    <span class="time">
+                                        January 21, 2012
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="mws-dropdown-viewall">
+	                        <a href="#">View All Notifications</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Messages -->
+            <div id="mws-user-message" class="mws-dropdown-menu">
+            	<a href="#" data-toggle="dropdown" class="mws-dropdown-trigger"><i class="icon-envelope"></i></a>
+                
+                <!-- Unred messages count -->
+                <span class="mws-dropdown-notif">35</span>
+                
+                <!-- Messages dropdown -->
+                <div class="mws-dropdown-box">
+                	<div class="mws-dropdown-content">
+                        <ul class="mws-messages">
+                        	<li class="read">
+                            	<a href="#">
+                                    <span class="sender">John Doe</span>
+                                    <span class="message">
+                                        Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
+                                    </span>
+                                    <span class="time">
+                                        January 21, 2012
+                                    </span>
+                                </a>
+                            </li>
+                        	<li class="read">
+                            	<a href="#">
+                                    <span class="sender">John Doe</span>
+                                    <span class="message">
+                                        Lorem ipsum dolor sit amet
+                                    </span>
+                                    <span class="time">
+                                        January 21, 2012
+                                    </span>
+                                </a>
+                            </li>
+                        	<li class="unread">
+                            	<a href="#">
+                                    <span class="sender">John Doe</span>
+                                    <span class="message">
+                                        Lorem ipsum dolor sit amet
+                                    </span>
+                                    <span class="time">
+                                        January 21, 2012
+                                    </span>
+                                </a>
+                            </li>
+                        	<li class="unread">
+                            	<a href="#">
+                                    <span class="sender">John Doe</span>
+                                    <span class="message">
+                                        Lorem ipsum dolor sit amet
+                                    </span>
+                                    <span class="time">
+                                        January 21, 2012
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="mws-dropdown-viewall">
+	                        <a href="#">View All Messages</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- User Information and functions section -->
+            <div id="mws-user-info" class="mws-inset">
+            
+            	<!-- User Photo -->
+            	<div id="mws-user-photo">
+                	<img src="http://laravel5.4.cn/admins/example/profile.jpg" alt="User Photo">
+                </div>
+                
+                <!-- Username and Functions -->
+                <div id="mws-user-functions">
+                    <div id="mws-username">
+                        Hello, John Doe
+                    </div>
+                    <ul>
+                    	<li><a href="#">Profile</a></li>
+                        <li><a href="#">Change Password</a></li>
+                        <li><a href="index.html">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Start Main Wrapper -->
+    <div id="mws-wrapper">
+    
+    	<!-- Necessary markup, do not remove -->
+		<div id="mws-sidebar-stitch"></div>
+		<div id="mws-sidebar-bg"></div>
+        
+        <!-- Sidebar Wrapper -->
+        <div id="mws-sidebar">
+        
+            <!-- Hidden Nav Collapse Button -->
+            <div id="mws-nav-collapse">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+        	<!-- Searchbox -->
+        	<div id="mws-searchbox" class="mws-inset">
+            	<form action="typography.html">
+                	<input type="text" class="mws-search-input" placeholder="搜索...">
+                    <button type="submit" class="mws-search-submit"><i class="icon-search"></i></button>
+                </form>
+            </div>
+            
+            <!-- Main Navigation -->
+            <div id="mws-navigation">
+                <ul>
+                    <li>
+                        <a href="#"><i class="icon-list"></i> 用户管理</a>
+                        <ul class="closed">
+                            <li><a href="http://laravel5.4.cn/admin/user/index">用户列表</a></li>
+                            <li><a href="http://laravel5.4.cn/admin/user/add">用户添加</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="icon-list"></i> 分类管理</a>
+                        <ul class="closed">
+                            <li><a href="http://laravel5.4.cn/admin/cate">分类列表</a></li>
+                            <li><a href="http://laravel5.4.cn/admin/cate/create">分类添加</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>         
+        </div>
+        
+        <!-- Main Container Start -->
+        <div id="mws-container" class="clearfix">
+        
+        	<!-- Inner Container Start -->
+            <div class="container">
+                                    <style type="text/css">
+        #pages li{
+            float: left;
+            height: 20px;
+            padding: 0 10px;
+            display: block;
+            font-size: 12px;
+            line-height: 20px;
+            text-align: center;
+            cursor: pointer;
+            outline: none;
+            background-color: #444444;
+            text-decoration: none;
+            border-right: 1px solid #232323;
+            border-left: 1px solid #666666;
+            border-right: 1px solid rgba(0, 0, 0, 0.5);
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+            -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5), inset 0px 1px 0px rgba(255, 255, 255, 0.15);
+            -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5), inset 0px 1px 0px rgba(255, 255, 255, 0.15);
+            box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5), inset 0px 1px 0px rgba(255, 255, 255, 0.15);
+        }
+
+        #pages li a{
+            color:white;
+        }
+        #pages .active{
+            background-color: #88a9eb;
+            color: #323232;
+        }
+
+        #pages .disabled{
+            color: #666666;
+            cursor: default;
+        }
+        #pages{
+            padding:0px;
+            margin: 0px;
+        }
+        #pages ul{
+            padding:0px;
+            margin:0px;
+        }
+    </style>
+    <div class="mws-panel grid_8">
+        <div class="mws-panel-header">
+		<span>
+			<i class="icon-table">
+			</i>
+			用户列表
+		</span>
+        </div>
+        <div class="mws-panel-body no-padding">
+            <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper" role="grid">
+
+                <form action="/admin/user/index">
+                    <div id="DataTables_Table_1_length" class="dataTables_length">
+                        <label>
+                            显示
+                            <select size="1" name="num" aria-controls="DataTables_Table_1">
+                                <option value="10" >
+                                    10
+                                </option>
+                                <option value="25" >
+                                    25
+                                </option>
+                                <option value="50" >
+                                    50
+                                </option>
+                                <option value="100" >
+                                    100
+                                </option>
+                                <option value="2" >
+                                    2
+                                </option>
+                            </select>
+                            条
+                        </label>
+                    </div>
+                    <div class="dataTables_filter" id="DataTables_Table_1_filter">
+                        <label>
+                            关键字:
+                            <input type="text" value="" name="keyword" aria-controls="DataTables_Table_1">
+                            <button class="btn btn-info">搜索</button>
+                        </label>
+                    </div>
+                </form>
+                <table class="mws-datatable-fn mws-table dataTable" id="DataTables_Table_1"
+                       aria-describedby="DataTables_Table_1_info">
+                    <thead>
+                    <tr role="row">
+                        <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="DataTables_Table_1"
+                            rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending"
+                            style="width: 160px;">
+                            ID
+                        </th>
+                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_1"
+                            rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending"
+                            style="width: 205px;">
+                            用户名
+                        </th>
+                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_1"
+                            rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending"
+                            style="width: 193px;">
+                            邮箱
+                        </th>
+                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_1"
+                            rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending"
+                            style="width: 135px;">
+                            头像
+                        </th>
+                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_1"
+                            rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending"
+                            style="width: 102px;">
+                            操作
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                            <tr class="  even  ">
+                            <td class=" sorting_1">
+                                1
+                            </td>
+                            <td class=" ">
+                                admin
+                            </td>
+                            <td class=" ">
+                                182885594@qq.com
+                            </td>
+                            <td class=" ">
+                                <img src="/Uploads/20170911/14_59b6279b34a1a46966.jpg" width="35" alt="">
+                            </td>
+
+                            <td class=" ">
+                                <a href="/admin/user/edit/1" class="btn"><i class="icon-pencil"></i></a>
+                                <a href="/admin/user/delete/1" class="btn btn-warning" onclick="javascript:return del();"><i class="icon-remove-sign"></i></a>
+                            </td>
+                            <script type="text/javascript">
+                                function del()
+                                {
+                                  if(confirm("确认删除？") == true){
+                                      return true;
+                                  }else{
+                                      return false;
+                                  }
+                                }
+                            </script>
+                        </tr>
+                                            <tr class=" odd  ">
+                            <td class=" sorting_1">
+                                3
+                            </td>
+                            <td class=" ">
+                                koTh9
+                            </td>
+                            <td class=" ">
+                                345378166@qq.com
+                            </td>
+                            <td class=" ">
+                                <img src="/Uploads/20171001/11_59d0663f00c4377464.jpg" width="35" alt="">
+                            </td>
+
+                            <td class=" ">
+                                <a href="/admin/user/edit/3" class="btn"><i class="icon-pencil"></i></a>
+                                <a href="/admin/user/delete/3" class="btn btn-warning" onclick="javascript:return del();"><i class="icon-remove-sign"></i></a>
+                            </td>
+                            <script type="text/javascript">
+                                function del()
+                                {
+                                  if(confirm("确认删除？") == true){
+                                      return true;
+                                  }else{
+                                      return false;
+                                  }
+                                }
+                            </script>
+                        </tr>
+                                            <tr class="  even  ">
+                            <td class=" sorting_1">
+                                4
+                            </td>
+                            <td class=" ">
+                                hs1P2
+                            </td>
+                            <td class=" ">
+                                587187888@qq.com
+                            </td>
+                            <td class=" ">
+                                <img src="/Uploads/20171001/11_59d0663f00c4377464.jpg" width="35" alt="">
+                            </td>
+
+                            <td class=" ">
+                                <a href="/admin/user/edit/4" class="btn"><i class="icon-pencil"></i></a>
+                                <a href="/admin/user/delete/4" class="btn btn-warning" onclick="javascript:return del();"><i class="icon-remove-sign"></i></a>
+                            </td>
+                            <script type="text/javascript">
+                                function del()
+                                {
+                                  if(confirm("确认删除？") == true){
+                                      return true;
+                                  }else{
+                                      return false;
+                                  }
+                                }
+                            </script>
+                        </tr>
+                                            <tr class=" odd  ">
+                            <td class=" sorting_1">
+                                5
+                            </td>
+                            <td class=" ">
+                                93F8f
+                            </td>
+                            <td class=" ">
+                                410523590@qq.com
+                            </td>
+                            <td class=" ">
+                                <img src="/Uploads/20171001/11_59d0663f00c4377464.jpg" width="35" alt="">
+                            </td>
+
+                            <td class=" ">
+                                <a href="/admin/user/edit/5" class="btn"><i class="icon-pencil"></i></a>
+                                <a href="/admin/user/delete/5" class="btn btn-warning" onclick="javascript:return del();"><i class="icon-remove-sign"></i></a>
+                            </td>
+                            <script type="text/javascript">
+                                function del()
+                                {
+                                  if(confirm("确认删除？") == true){
+                                      return true;
+                                  }else{
+                                      return false;
+                                  }
+                                }
+                            </script>
+                        </tr>
+                                            <tr class="  even  ">
+                            <td class=" sorting_1">
+                                6
+                            </td>
+                            <td class=" ">
+                                v0t4M
+                            </td>
+                            <td class=" ">
+                                969305124@qq.com
+                            </td>
+                            <td class=" ">
+                                <img src="/Uploads/20171001/11_59d0663f00c4377464.jpg" width="35" alt="">
+                            </td>
+
+                            <td class=" ">
+                                <a href="/admin/user/edit/6" class="btn"><i class="icon-pencil"></i></a>
+                                <a href="/admin/user/delete/6" class="btn btn-warning" onclick="javascript:return del();"><i class="icon-remove-sign"></i></a>
+                            </td>
+                            <script type="text/javascript">
+                                function del()
+                                {
+                                  if(confirm("确认删除？") == true){
+                                      return true;
+                                  }else{
+                                      return false;
+                                  }
+                                }
+                            </script>
+                        </tr>
+                                            <tr class=" odd  ">
+                            <td class=" sorting_1">
+                                7
+                            </td>
+                            <td class=" ">
+                                KNwTc
+                            </td>
+                            <td class=" ">
+                                644245782@qq.com
+                            </td>
+                            <td class=" ">
+                                <img src="/Uploads/20171001/11_59d0663f00c4377464.jpg" width="35" alt="">
+                            </td>
+
+                            <td class=" ">
+                                <a href="/admin/user/edit/7" class="btn"><i class="icon-pencil"></i></a>
+                                <a href="/admin/user/delete/7" class="btn btn-warning" onclick="javascript:return del();"><i class="icon-remove-sign"></i></a>
+                            </td>
+                            <script type="text/javascript">
+                                function del()
+                                {
+                                  if(confirm("确认删除？") == true){
+                                      return true;
+                                  }else{
+                                      return false;
+                                  }
+                                }
+                            </script>
+                        </tr>
+                                            <tr class="  even  ">
+                            <td class=" sorting_1">
+                                8
+                            </td>
+                            <td class=" ">
+                                pXXKz
+                            </td>
+                            <td class=" ">
+                                817200205@qq.com
+                            </td>
+                            <td class=" ">
+                                <img src="/Uploads/20171001/11_59d0663f00c4377464.jpg" width="35" alt="">
+                            </td>
+
+                            <td class=" ">
+                                <a href="/admin/user/edit/8" class="btn"><i class="icon-pencil"></i></a>
+                                <a href="/admin/user/delete/8" class="btn btn-warning" onclick="javascript:return del();"><i class="icon-remove-sign"></i></a>
+                            </td>
+                            <script type="text/javascript">
+                                function del()
+                                {
+                                  if(confirm("确认删除？") == true){
+                                      return true;
+                                  }else{
+                                      return false;
+                                  }
+                                }
+                            </script>
+                        </tr>
+                                            <tr class=" odd  ">
+                            <td class=" sorting_1">
+                                9
+                            </td>
+                            <td class=" ">
+                                bgTNm
+                            </td>
+                            <td class=" ">
+                                704642565@qq.com
+                            </td>
+                            <td class=" ">
+                                <img src="/Uploads/20171001/11_59d0663f00c4377464.jpg" width="35" alt="">
+                            </td>
+
+                            <td class=" ">
+                                <a href="/admin/user/edit/9" class="btn"><i class="icon-pencil"></i></a>
+                                <a href="/admin/user/delete/9" class="btn btn-warning" onclick="javascript:return del();"><i class="icon-remove-sign"></i></a>
+                            </td>
+                            <script type="text/javascript">
+                                function del()
+                                {
+                                  if(confirm("确认删除？") == true){
+                                      return true;
+                                  }else{
+                                      return false;
+                                  }
+                                }
+                            </script>
+                        </tr>
+                                            <tr class="  even  ">
+                            <td class=" sorting_1">
+                                10
+                            </td>
+                            <td class=" ">
+                                z2kyI
+                            </td>
+                            <td class=" ">
+                                700710096@qq.com
+                            </td>
+                            <td class=" ">
+                                <img src="/Uploads/20171001/11_59d0663f00c4377464.jpg" width="35" alt="">
+                            </td>
+
+                            <td class=" ">
+                                <a href="/admin/user/edit/10" class="btn"><i class="icon-pencil"></i></a>
+                                <a href="/admin/user/delete/10" class="btn btn-warning" onclick="javascript:return del();"><i class="icon-remove-sign"></i></a>
+                            </td>
+                            <script type="text/javascript">
+                                function del()
+                                {
+                                  if(confirm("确认删除？") == true){
+                                      return true;
+                                  }else{
+                                      return false;
+                                  }
+                                }
+                            </script>
+                        </tr>
+                                            <tr class=" odd  ">
+                            <td class=" sorting_1">
+                                11
+                            </td>
+                            <td class=" ">
+                                bvejS
+                            </td>
+                            <td class=" ">
+                                918479822@qq.com
+                            </td>
+                            <td class=" ">
+                                <img src="/Uploads/20171001/11_59d0663f00c4377464.jpg" width="35" alt="">
+                            </td>
+
+                            <td class=" ">
+                                <a href="/admin/user/edit/11" class="btn"><i class="icon-pencil"></i></a>
+                                <a href="/admin/user/delete/11" class="btn btn-warning" onclick="javascript:return del();"><i class="icon-remove-sign"></i></a>
+                            </td>
+                            <script type="text/javascript">
+                                function del()
+                                {
+                                  if(confirm("确认删除？") == true){
+                                      return true;
+                                  }else{
+                                      return false;
+                                  }
+                                }
+                            </script>
+                        </tr>
+                                        </tbody>
+                </table>
+
+                <div class="dataTables_paginate paging_full_numbers" id="DataTables_Table_1_paginate">
+
+                    <div id="pages">
+
+                        <ul class="pagination">
+        
+                    <li class="disabled"><span>&laquo;</span></li>
+        
+        
+                    
+            
+            
+                                                                        <li class="active"><span>1</span></li>
+                                                                                <li><a href="http://laravel5.4.cn/admin/user/index?page=2">2</a></li>
+                                                        
+        
+                    <li><a href="http://laravel5.4.cn/admin/user/index?page=2" rel="next">&raquo;</a></li>
+            </ul>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+            </div>
+            <!-- Inner Container End -->
+                       
+            <!-- Footer -->
+            <div id="mws-footer">
+            	Copyright Your Website 2012. All Rights Reserved.
+            </div>
+            
+        </div>
+        <!-- Main Container End -->
+        
+    </div>
+
+    <!-- JavaScript Plugins -->
+    <script src="http://laravel5.4.cn/admins/js/libs/jquery-1.8.3.min.js"></script>
+    <script src="http://laravel5.4.cn/admins/js/libs/jquery.mousewheel.min.js"></script>
+    <script src="http://laravel5.4.cn/admins/js/libs/jquery.placeholder.min.js"></script>
+    <script src="http://laravel5.4.cn/admins/custom-plugins/fileinput.js"></script>
+    
+    <!-- jQuery-UI Dependent Scripts -->
+    <script src="http://laravel5.4.cn/admins/jui/js/jquery-ui-1.9.2.min.js"></script>
+    <script src="http://laravel5.4.cn/admins/jui/jquery-ui.custom.min.js"></script>
+    <script src="http://laravel5.4.cn/admins/jui/js/jquery.ui.touch-punch.js"></script>
+
+    <!-- Plugin Scripts -->
+    <script src="http://laravel5.4.cn/admins/plugins/datatables/jquery.dataTables.min.js"></script>
+    <!--[if lt IE 9]>
+    <script src="js/libs/excanvas.min.js"></script>
+    <![endif]-->
+    <script src="http://laravel5.4.cn/admins/plugins/flot/jquery.flot.min.js"></script>
+    <script src="http://laravel5.4.cn/admins/plugins/flot/plugins/jquery.flot.tooltip.min.js"></script>
+    <script src="http://laravel5.4.cn/admins/plugins/flot/plugins/jquery.flot.pie.min.js"></script>
+    <script src="http://laravel5.4.cn/admins/plugins/flot/plugins/jquery.flot.stack.min.js"></script>
+    <script src="http://laravel5.4.cn/admins/plugins/flot/plugins/jquery.flot.resize.min.js"></script>
+    <script src="http://laravel5.4.cn/admins/plugins/colorpicker/colorpicker-min.js"></script>
+    <script src="http://laravel5.4.cn/admins/plugins/validate/jquery.validate-min.js"></script>
+    <script src="http://laravel5.4.cn/admins/custom-plugins/wizard/wizard.min.js"></script>
+
+    <!-- Core Script -->
+    <script src="http://laravel5.4.cn/admins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="http://laravel5.4.cn/admins/js/core/mws.js"></script>
+
+    <!-- Themer Script (Remove if not needed) -->
+    <script src="http://laravel5.4.cn/admins/js/core/themer.js"></script>
+
+    <!-- Demo Scripts (remove if not needed) -->
+    <script src="http://laravel5.4.cn/admins/js/demo/demo.dashboard.js"></script>
+
+</body>
+</html>
