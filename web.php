@@ -15,8 +15,9 @@
         return view('welcome');
     });
 
-    //TestController
-    Route::resource('test', 'TestController');
+    Route::get('foo', function () {
+        return 'Hello World!';
+    });
 
     //UserController
     Route::get('/user/test', 'UserController@test');
@@ -40,7 +41,6 @@
     /**************     admin end    ***************************/
     /************************   workman   ****************************/
     Route::get('/workman/test/test', 'Workman\TestController@test');
-    Route::get('/workman/test/agency', 'Workman\TestController@agency');
     /************************   workman   ****************************/
 
 

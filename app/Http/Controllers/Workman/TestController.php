@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Workman;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Workerman\Worker;
+use Workerman\Connection\AsyncTcpConnection;
 use Beanbun\Beanbun;
 use Illuminate\Support\Facades\Storage;
 class TestController extends Controller
@@ -19,6 +21,10 @@ class TestController extends Controller
 //        };
 //        $beanbun->start();
 
+    }
+
+    public function agency(){
+        echo 'agency';
     }
 
 
