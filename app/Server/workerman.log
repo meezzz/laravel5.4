@@ -35,3 +35,22 @@
 2017-09-18 11:16:18 pid:18225 Workerman[workerman.php] start in DEBUG mode
 2017-09-18 11:16:43 pid:18225 Workerman[workerman.php] Stopping ...
 2017-09-18 11:16:43 pid:18225 Workerman[workerman.php] has been stopped
+2017-09-18 14:25:33 pid:19853 Workerman[test.php] start in DEBUG mode
+2017-09-18 14:26:37 pid:19865 Workerman[test.php] start in DEBUG mode
+2017-09-18 14:28:21 pid:19927 Workerman[test.php] start in DEBUG mode
+2017-09-18 14:28:44 pid:19927 Workerman[test.php] Stopping ...
+2017-09-18 14:28:44 pid:19927 Workerman[test.php] has been stopped
+2017-09-18 14:29:04 pid:19939 Workerman[test_timer_chat.php] start in DEBUG mode
+2017-09-18 14:38:31 pid:19939 Workerman[test_timer_chat.php] Stopping ...
+2017-09-18 14:38:31 pid:19939 Workerman[test_timer_chat.php] has been stopped
+2017-09-18 14:39:14 pid:20080 Workerman[test_timer_chat.php] start in DEBUG mode
+2017-09-18 15:12:39 pid:20080 Workerman[test_timer_chat.php] Stopping ...
+2017-09-18 15:12:39 pid:20080 Workerman[test_timer_chat.php] has been stopped
+2017-09-18 15:14:02 pid:20345 Workerman[test_timer_chat.php] start in DEBUG mode
+2017-09-18 15:14:20 pid:20346 Worker[20346] process terminated with ERROR: E_ERROR "Call to undefined function dump() in /home/wlz/laravel5.4/app/Server/test_timer_chat.php on line 33"
+2017-09-18 15:14:20 pid:20345 worker[none:20346] exit with status 65280
+2017-09-18 15:14:30 pid:20345 Workerman[test_timer_chat.php] Stopping ...
+2017-09-18 15:14:30 pid:20345 Workerman[test_timer_chat.php] has been stopped
+2017-09-18 15:14:43 pid:20351 Workerman[test_timer_chat.php] start in DEBUG mode
+2017-09-18 15:16:21 pid:20351 Workerman[test_timer_chat.php] Stopping ...
+2017-09-18 15:16:21 pid:20351 Workerman[test_timer_chat.php] has been stopped

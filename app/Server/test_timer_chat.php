@@ -30,7 +30,8 @@ function broadcast($msg)
     foreach ($worker->connections as $connection) {
         if(!isset($connection->name))
             continue;
-        $connection->send($msg);
+      var_dump($msg);
+	 $connection->send($msg);
     }
 }
  
