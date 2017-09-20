@@ -54,3 +54,23 @@
 2017-09-18 15:14:43 pid:20351 Workerman[test_timer_chat.php] start in DEBUG mode
 2017-09-18 15:16:21 pid:20351 Workerman[test_timer_chat.php] Stopping ...
 2017-09-18 15:16:21 pid:20351 Workerman[test_timer_chat.php] has been stopped
+2017-09-18 15:36:06 pid:20415 Workerman[test_timer_chat.php] start in DEBUG mode
+2017-09-18 15:51:11 pid:20415 Workerman[test_timer_chat.php] Stopping ...
+2017-09-18 15:51:11 pid:20415 Workerman[test_timer_chat.php] has been stopped
+2017-09-18 15:51:31 pid:20487 Workerman[test_timer_chat.php] start in DEBUG mode
+2017-09-20 09:55:00 pid:30987 Workerman[test_timer_chat.php] status 
+2017-09-20 09:57:54 pid:31001 Workerman[test_timer_chat.php] stop 
+2017-09-20 09:57:54 pid:31001 Workerman[test_timer_chat.php] is stoping ...
+2017-09-20 09:57:54 pid:20487 Workerman[test_timer_chat.php] Stopping ...
+2017-09-20 09:57:54 pid:20487 Workerman[test_timer_chat.php] has been stopped
+2017-09-20 09:57:54 pid:31001 Workerman[test_timer_chat.php] stop success
+2017-09-20 09:58:03 pid:31004 Workerman[test_timer_chat.php] start in DEBUG mode
+2017-09-20 09:58:28 pid:31004 Workerman[test_timer_chat.php] Stopping ...
+2017-09-20 09:58:28 pid:31004 Workerman[test_timer_chat.php] has been stopped
+2017-09-20 09:59:21 pid:31010 Workerman[test_timer_chat.php] start in DEBUG mode
+2017-09-20 10:03:43 pid:31032 Workerman[test_timer_chat.php] stop 
+2017-09-20 10:03:43 pid:31032 Workerman[test_timer_chat.php] not run
+2017-09-20 10:04:04 pid:31036 Workerman[test_timer_chat.php] start in DEBUG mode
+2017-09-20 10:04:07 pid:31036 Workerman[test_timer_chat.php] Stopping ...
+2017-09-20 10:04:07 pid:31036 Workerman[test_timer_chat.php] has been stopped
+2017-09-20 10:05:24 pid:31042 Workerman[test_timer_chat.php] start in DAEMON mode
