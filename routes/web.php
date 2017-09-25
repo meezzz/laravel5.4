@@ -16,7 +16,7 @@
     });
 
     Route::get('/wlz', function () {
-        return 'hello wlz';
+        return 'hello hello wlz';
     });
     //TestController
     Route::resource('test', 'TestController');
