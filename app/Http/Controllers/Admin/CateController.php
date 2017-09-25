@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin;
 
 class CateController extends Controller
 {
@@ -12,9 +13,10 @@ class CateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Admin $admin)
     {
         //
+        return $admin->test();
         return 'index';
     }
 
