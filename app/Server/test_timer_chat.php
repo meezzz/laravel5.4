@@ -19,7 +19,7 @@ $worker->onMessage = function($connection,$data){
              return $connection->close('auth fail and close');
         }
         $connection->name = $data['name'];
-        return broadcast($connection->send($connection->name ." login"));
+        return broadcast($connection->name ." login");
     }
     broadcast($connection->name ." said: $data");
 };

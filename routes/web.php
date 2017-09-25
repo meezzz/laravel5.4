@@ -15,8 +15,8 @@
         return view('welcome');
     });
 
-    Route::get('test',function(){
-     return 1;
+    Route::get('/wlz', function () {
+        return 'hello wlz';
     });
     //TestController
     Route::resource('test', 'TestController');
