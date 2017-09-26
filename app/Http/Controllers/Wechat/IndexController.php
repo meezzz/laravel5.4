@@ -6,6 +6,7 @@
  * Date: 2017/9/25
  * Time: 18:58
  */
+namespace   App\Http\Controllers\Wechat;
 class IndexController
 {
     const TOKEN = '20170925wangliuzheng';
