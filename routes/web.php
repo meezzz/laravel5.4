@@ -46,6 +46,9 @@
     Route::get('/workman/test/agency', 'Workman\TestController@agency');
     /************************   workman   ****************************/
 
+    /**********************   Wechat start  ****************************/
+    Route::get('/wechat', 'Wechat\IndexController@index');
+    /**********************   Wechat end  ****************************/
 
 
 
