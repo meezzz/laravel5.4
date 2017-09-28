@@ -47,7 +47,7 @@
     /************************   workman   ****************************/
 
     /**********************   Wechat start  ****************************/
-    Route::get('/wechat', 'Wechat\IndexController@index');
+    Route::any('/wechat', 'Wechat\IndexController@index');
     /**********************   Wechat end  ****************************/
 
 
