@@ -21,17 +21,14 @@ class IndexController
 
     //用户发给公众号的消息以及开发者需要的事件推送，将被微信转发到该方法中
     public function index(){
-
-        $this->exception_log->add('1：','wechat');
+        $this->exception_log->add('1：','wechat_index');
         //验证消息的确来自微信服务器
         $echostr = isset($_GET['echostr']) ? $_GET['echostr'] : '';
         $is_from_wechat_server = $this->checkSignature();
-        $this->exception_log->add('2--is_from_wechat:'.$is_from_wechat_server.'-$echostr:'.$echostr,'wechat');
         if($is_from_wechat_server && $echostr){
-            $this->exception_log->add('3：','wechat');
+            $this->exception_log->add('echostr：'.$echostr.'--is_from_wechat:'.$is_from_wechat_server,'wechat_mp_conf');
             return $echostr;
         }else{
-            $this->exception_log->add('4：','wechat');
             $this->responseMsg();
         }
         return view('errors.403');
@@ -65,7 +62,8 @@ class IndexController
                 $createTime = time();
                 $msgType = 'text';
                 $content ='终于等到您！！欢迎关注我们的微信订阅号。';
-
+                //日志
+                $this->exception_log->add('1:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_subscribe');
                 $template = "<xml>
                                 <ToUserName><![CDATA[%s]]></ToUserName>
                                 <FromUserName><![CDATA[%s]]></FromUserName>
@@ -74,6 +72,18 @@ class IndexController
                                 <Content><![CDATA[%s]]></Content>
                             </xml>";
                 $info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
+                //记录新增的订阅用户
+                $info = DB::table('wechat_user_subscribes')->where('open_id','=',$toUser)->get();
+                if($info){
+                    DB::table('wechat_user_subscribes')->where('open_id','=',$toUser)->update(['updated_at' => date('Y-m-d H:i:s'),'is_del'=>0]);
+                }else{
+                    $data['open_id'] = $toUser;
+                    $data['server_id'] = $fromUser;
+                    $data['is_del'] = 0;
+                    $data['created_at'] =date('Y-m-d H:i:s');
+                    DB::table('wechat_user_subscribes')->where('open_id','=',$toUser)->insert($data);
+                }
+                $this->exception_log->add('2:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_subscribe');
                 echo $info ;
                 exit;
             }
@@ -115,6 +125,7 @@ class IndexController
         $signature =  !empty($_GET['signature']) ? $_GET['signature']:'';
         $timestamp =  !empty($_GET['timestamp']) ? $_GET['timestamp']:'';
         $nonce =  !empty($_GET['nonce']) ? $_GET['nonce']:'';
+        $this->exception_log->add('signature:'.$signature.'--timestamp:'.$timestamp.'--nonce:'.$nonce,'wechat_check_signatrue');
         $token = self::TOKEN;
         $tmpArr = array($token, $timestamp, $nonce);
         sort($tmpArr, SORT_STRING);
