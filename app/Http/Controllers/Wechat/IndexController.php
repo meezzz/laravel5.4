@@ -20,8 +20,8 @@ class IndexController
         //验证消息的确来自微信服务器
         $echostr = isset($_GET['echostr']) ? $_GET['echostr'] : '';
         $is_from_wechat_server = $this->checkSignature();
+        exception_log('echostr：'.$echostr.'--is_from_wechat:'.$is_from_wechat_server,'wechat_mp_conf');
         if($is_from_wechat_server && $echostr){
-            exception_log('echostr：'.$echostr.'--is_from_wechat:'.$is_from_wechat_server,'wechat_mp_conf');
             return $echostr;
         }else{
             $this->responseMsg();
