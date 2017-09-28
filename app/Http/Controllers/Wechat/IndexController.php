@@ -8,8 +8,7 @@
  */
 namespace   App\Http\Controllers\Wechat;
 use \DB;
-use \App\Model\ExceptionLog;
-
+use \App\Model\Wechat\WechatUserSubscribe;
 class IndexController
 {
     const TOKEN = '20170925wangliuzheng';
@@ -67,16 +66,18 @@ class IndexController
                             </xml>";
                 $info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
                 //记录新增的订阅用户
-//                $info = DB::table('wechat_user_subscribes')->where('open_id','=',$toUser)->get();
-//                if($info){
-//                    DB::table('wechat_user_subscribes')->where('open_id','=',$toUser)->update(['updated_at' => date('Y-m-d H:i:s'),'is_del'=>0]);
-//                }else{
-//                    $data['open_id'] = $toUser;
-//                    $data['server_id'] = $fromUser;
-//                    $data['is_del'] = 0;
-//                    $data['created_at'] =date('Y-m-d H:i:s');
-//                    DB::table('wechat_user_subscribes')->where('open_id','=',$toUser)->insert($data);
-//                }
+                $open_user_info = WechatUserSubscribe::where('open_id',$toUser)->get();
+                $wechat = new WechatUserSubscribe;
+                if($open_user_info){
+                    $wechat->open_id = $toUser;
+                    $wechat->server_id = $fromUser;
+                    $wechat->is_del = 0;
+                    $wechat->created_at = date('Y-m-d H:i:s');
+                    $wechat->updated_at = date('Y-m-d H:i:s');
+                    $wechat->save();
+                }else{
+                    $wechat->where('open_id',$toUser)->update(['updated_at' => date('Y-m-d H:i:s')]);
+                }
                 exception_log('2:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_subscribe');
                 echo $info ;
                 exit;
