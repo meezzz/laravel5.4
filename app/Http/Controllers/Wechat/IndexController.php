@@ -25,7 +25,7 @@ class IndexController
         }else{
             $this->responseMsg();
         }
-        return view('errors.403');
+        return '';
     }
 
     //接收事件推送，并回复
@@ -48,10 +48,10 @@ class IndexController
         }
         $postObj = simplexml_load_string($postStr);
         if(strtolower($postObj->MsgType) == 'event'){
+            $toUser = $postObj->FromUserName;
+            $fromUser = $postObj->ToUserName;
             if(strtolower($postObj->Event) == 'subscribe'){
                 //记录关注用户信息（FromUserName），回复用户
-                $toUser = $postObj->FromUserName;
-                $fromUser = $postObj->ToUserName;
                 $createTime = time();
                 $msgType = 'text';
                 $content ='终于等到您！！欢迎关注我们的微信订阅号。';
@@ -71,16 +71,21 @@ class IndexController
                 if($open_user_info){
                     $wechat->open_id = $toUser;
                     $wechat->server_id = $fromUser;
-                    $wechat->is_del = 0;
+                    $wechat->unsubscribe = 1;
                     $wechat->created_at = date('Y-m-d H:i:s');
                     $wechat->updated_at = date('Y-m-d H:i:s');
                     $wechat->save();
                 }else{
-                    $wechat->where('open_id',$toUser)->update(['updated_at' => date('Y-m-d H:i:s')]);
+                    $wechat->where('open_id',$toUser)->update(['unsubscribe' => 1]);
                 }
                 exception_log('2:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_subscribe');
                 echo $info ;
                 exit;
+            }elseif (strtolower($postObj->Event) =='unsubscribe'){
+                //取消订阅
+                $wechat = new WechatUserSubscribe;
+                $wechat->where('open_id',$toUser)->update(['subscribe' => 0]);
+
             }
         }
         /**
