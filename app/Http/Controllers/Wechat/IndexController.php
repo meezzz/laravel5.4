@@ -21,7 +21,7 @@ class IndexController
 
     //用户发给公众号的消息以及开发者需要的事件推送，将被微信转发到该方法中
     public function index(){
-        $this->exception_log->add('1：','wechat_index');
+        $this->exception_log->add('index：','wechat_index');
         //验证消息的确来自微信服务器
         $echostr = isset($_GET['echostr']) ? $_GET['echostr'] : '';
         $is_from_wechat_server = $this->checkSignature();
@@ -52,7 +52,6 @@ class IndexController
         if(empty($postStr)){
             $postStr = file_get_contents("php://input");
         }
-        $this->exception_log->add('5：'.$postStr,'wechat');
         $postObj = simplexml_load_string($postStr);
         if(strtolower($postObj->MsgType) == 'event'){
             if(strtolower($postObj->Event) == 'subscribe'){
@@ -73,16 +72,16 @@ class IndexController
                             </xml>";
                 $info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
                 //记录新增的订阅用户
-                $info = DB::table('wechat_user_subscribes')->where('open_id','=',$toUser)->get();
-                if($info){
-                    DB::table('wechat_user_subscribes')->where('open_id','=',$toUser)->update(['updated_at' => date('Y-m-d H:i:s'),'is_del'=>0]);
-                }else{
-                    $data['open_id'] = $toUser;
-                    $data['server_id'] = $fromUser;
-                    $data['is_del'] = 0;
-                    $data['created_at'] =date('Y-m-d H:i:s');
-                    DB::table('wechat_user_subscribes')->where('open_id','=',$toUser)->insert($data);
-                }
+//                $info = DB::table('wechat_user_subscribes')->where('open_id','=',$toUser)->get();
+//                if($info){
+//                    DB::table('wechat_user_subscribes')->where('open_id','=',$toUser)->update(['updated_at' => date('Y-m-d H:i:s'),'is_del'=>0]);
+//                }else{
+//                    $data['open_id'] = $toUser;
+//                    $data['server_id'] = $fromUser;
+//                    $data['is_del'] = 0;
+//                    $data['created_at'] =date('Y-m-d H:i:s');
+//                    DB::table('wechat_user_subscribes')->where('open_id','=',$toUser)->insert($data);
+//                }
                 $this->exception_log->add('2:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_subscribe');
                 echo $info ;
                 exit;
