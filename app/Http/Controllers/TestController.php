@@ -15,10 +15,7 @@ class TestController extends Controller
 //        $res = DB::table('test')->first();
 //        dd($res);
 //        $data = array('type'=>'test','content'=>'1111');
-        $log = new  ExceptionLog();
-        $log->type = 'test';
-        $log->content = '2111';
-        $log->save();
+        return exception_log('function','test');
     }
 
 }
