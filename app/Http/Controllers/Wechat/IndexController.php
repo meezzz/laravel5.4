@@ -24,7 +24,7 @@ class IndexController
 
         $this->exception_log->add('1：','wechat');
         //验证消息的确来自微信服务器
-        $echostr = $_GET['echostr'];
+        $echostr = isset($_GET['echostr']) ? $_GET['echostr'] : '';
         $is_from_wechat_server = $this->checkSignature();
         $this->exception_log->add('2--is_from_wechat:'.$is_from_wechat_server.'-$echostr:'.$echostr,'wechat');
         if($is_from_wechat_server && $echostr){
@@ -120,7 +120,6 @@ class IndexController
         sort($tmpArr, SORT_STRING);
         $tmpStr = implode( $tmpArr );
         $tmpStr = sha1( $tmpStr );
-
         if( $tmpStr == $signature ){
             return true;
         }else{
