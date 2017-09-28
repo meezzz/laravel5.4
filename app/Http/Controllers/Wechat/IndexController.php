@@ -25,11 +25,13 @@ class IndexController
         $this->exception_log->add('1：','wechat');
         //验证消息的确来自微信服务器
         $echostr = $_GET['echostr'];
-        $is_from_weixin_server = $this->checkSignature();
-        if($is_from_weixin_server && $echostr){
+        $is_from_wechat_server = $this->checkSignature();
+        $this->exception_log->add('2--is_from_wechat:'.$is_from_wechat_server.'-$echostr:'.$echostr,'wechat');
+        if($is_from_wechat_server && $echostr){
+            $this->exception_log->add('3：','wechat');
             return $echostr;
         }else{
-            $this->exception_log->add('2：','wechat');
+            $this->exception_log->add('4：','wechat');
             $this->responseMsg();
         }
         return view('errors.403');
@@ -53,7 +55,7 @@ class IndexController
         if(empty($postStr)){
             $postStr = file_get_contents("php://input");
         }
-        $this->exception_log->add('3：'.$postStr,'wechat');
+        $this->exception_log->add('5：'.$postStr,'wechat');
         $postObj = simplexml_load_string($postStr);
         if(strtolower($postObj->MsgType) == 'event'){
             if(strtolower($postObj->Event) == 'subscribe'){
