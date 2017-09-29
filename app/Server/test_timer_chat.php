@@ -21,7 +21,7 @@ $worker->onMessage = function($connection,$data){
         $connection->name = $data['name'];
         return broadcast($connection->send($connection->name ." login"));
     }
-    broadcast($connection->send($connection->name ." said: $data"));
+    broadcast($connection->name ." said: $data");
 };
 
 function broadcast($msg)
@@ -30,7 +30,6 @@ function broadcast($msg)
     foreach ($worker->connections as $connection) {
         if(!isset($connection->name))
             continue;
-      var_dump($msg);
 	 $connection->send($msg);
     }
 }
