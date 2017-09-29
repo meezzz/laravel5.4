@@ -1,5 +1,12 @@
 <?php
-require_once '../../../vendor/workerman/workerman/Autoloader.php';
+/**
+ * Created by PhpStorm.
+ * User: Myron
+ * Date: 2017/9/14
+ * Time: 15:50
+ */
+
+require_once './workerman/Autoloader.php';
 use Workerman\Worker;
 use Workerman\Connection\AsyncTcpConnection;
 
@@ -18,4 +25,3 @@ $worker->onConnect = function ($connection){
 
 // 运行worker
 Worker::runAll();
-
