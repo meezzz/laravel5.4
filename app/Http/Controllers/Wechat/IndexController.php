@@ -68,7 +68,7 @@ class IndexController
                 //记录新增的订阅用户
                 $open_user_info = WechatUserSubscribe::where('open_id',$toUser)->get();
                 $wechat = new WechatUserSubscribe;
-                if($open_user_info){
+                if(!$open_user_info){
                     $wechat->open_id = $toUser;
                     $wechat->server_id = $fromUser;
                     $wechat->unsubscribe = 1;
