@@ -78,7 +78,7 @@ class IndexController
                     exception_log('2:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_subscribe');
                 }else{
                     exception_log('3:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_subscribe');
-                    $wechat->where('open_id',$toUser)->update(['unsubscribe' => 1]);
+                    $wechat->where('open_id',$toUser)->update(['subscribe' => 1]);
                 }
                 exception_log('4:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_subscribe');
                 echo $info ;
