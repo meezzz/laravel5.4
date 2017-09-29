@@ -75,17 +75,19 @@ class IndexController
                     $wechat->created_at = date('Y-m-d H:i:s');
                     $wechat->updated_at = date('Y-m-d H:i:s');
                     $wechat->save();
+                    exception_log('2:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_subscribe');
                 }else{
+                    exception_log('3:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_subscribe');
                     $wechat->where('open_id',$toUser)->update(['unsubscribe' => 1]);
                 }
-                exception_log('2:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_subscribe');
+                exception_log('4:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_subscribe');
                 echo $info ;
                 exit;
             }elseif (strtolower($postObj->Event) =='unsubscribe'){
+                exception_log('1:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_unsubscribe');
                 //取消订阅
                 $wechat = new WechatUserSubscribe;
                 $wechat->where('open_id',$toUser)->update(['subscribe' => 0]);
-
             }
         }
         /**
