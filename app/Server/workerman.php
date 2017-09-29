@@ -5,7 +5,7 @@
  * Date: 2017/9/14
  * Time: 15:50
  */
-require_once './Workerman/Autoloader.php';
+require_once './workerman/Autoloader.php';
 use Workerman\Worker;
 use Workerman\Connection\AsyncTcpConnection;
 
