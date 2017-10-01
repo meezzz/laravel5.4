@@ -57,7 +57,7 @@
 
 				{{--11111111111111--}}
 
-				<form action="/user/index">
+				<form action="/admin/user/index">
 					<div id="DataTables_Table_1_length" class="dataTables_length">
 						<label>
 							显示
@@ -132,12 +132,12 @@
 								{{$v->email}}
 							</td>
 							<td class=" ">
-								<img src="{{$v->profile}}" width="50" alt="">
+								<img src="{{$v->profile}}" width="35" alt="头像">
 							</td>
 
 							<td class=" ">
-								<a href="/user/edit/{{$v->id}}" class="btn"><i class="icon-pencil"></i></a>
-								<a href="/user/delete/{{$v->id}}" class="btn btn-warning"><i class="icon-remove-sign"></i></a>
+								<a href="/admin/user/edit/{{$v->id}}" class="btn"><i class="icon-pencil"></i></a>
+								<a href="/admin/user/delete/{{$v->id}}" class="btn btn-warning"><i class="icon-remove-sign"></i></a>
 							</td>
 						</tr>
 					@endforeach

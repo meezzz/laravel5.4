@@ -17,7 +17,7 @@
     </div>
 	@endif
     <div class="mws-panel-body no-padding">
-    	<form class="mws-form" action="{{url('/user/insert')}}" method="post" enctype="multipart/form-data">
+    	<form class="mws-form" action="{{url('/admin/user/doadd')}}" method="post" enctype="multipart/form-data">
     		<div class="mws-form-inline">
     			<div class="mws-form-row">
     				<label class="mws-form-label">用户名</label>
@@ -46,13 +46,13 @@
     			<div class="mws-form-row">
     				<label class="mws-form-label">头像</label>
     				<div class="mws-form-item">
-    					<input type="file" class="small" name="profile">
+    					<input type="file" class="small" name="profile" value="{{old('profile')}}>
     				</div>
     			</div>
     			<div class="mws-form-row">
     				<label class="mws-form-label">个人介绍</label>
     				<div class="mws-form-item">
-    					<textarea rows="" cols="" class="small" name="intro"></textarea>
+    					<textarea rows="" cols="" class="small" name="intro" value = {{old('intro')}}></textarea>
     				</div>
     			</div>
     		</div>
