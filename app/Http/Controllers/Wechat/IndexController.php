@@ -14,15 +14,14 @@ class IndexController
     //用户发给公众号的消息以及开发者需要的事件推送，将被微信转发到该方法中
     public function index(){
         //验证消息的确来自微信服务器
-        return $this->checkSignature();
-    }
-
-    private function checkSignature()
-    {
         $signature = $_GET["signature"];
         $timestamp = $_GET["timestamp"];
         $nonce = $_GET["nonce"];
+        return $this->checkSignature($signature,$timestamp,$nonce);
+    }
 
+    private function checkSignature($signature,$timestamp,$nonce)
+    {
         $token = self::TOKEN;
         $tmpArr = array($token, $timestamp, $nonce);
         sort($tmpArr, SORT_STRING);
