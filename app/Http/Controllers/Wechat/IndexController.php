@@ -17,7 +17,9 @@ class IndexController
         $signature = $_GET["signature"];
         $timestamp = $_GET["timestamp"];
         $nonce = $_GET["nonce"];
-        return $this->checkSignature($signature,$timestamp,$nonce);
+        $res = $this->checkSignature($signature,$timestamp,$nonce);
+        if($res)
+            return $_GET['echostr'];
     }
 
     private function checkSignature($signature,$timestamp,$nonce)
