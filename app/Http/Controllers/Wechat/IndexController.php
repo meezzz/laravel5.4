@@ -31,7 +31,7 @@ class IndexController
         }else{
             $this->responseMsg();
         }
-        return view('errors.403');
+//        return view('errors.403');
     }
 
     //接收事件推送，并回复
