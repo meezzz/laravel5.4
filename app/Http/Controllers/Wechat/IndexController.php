@@ -15,7 +15,8 @@ class IndexController
     //用户发给公众号的消息以及开发者需要的事件推送，将被微信转发到该方法中
     public function index(){
         //验证消息的确来自微信服务器
-        $echostr =  !empty($_GET['echostr']) ? $_GET['echostr']:'';
+//        $echostr =  !empty($_GET['echostr']) ? $_GET['echostr']:'';
+        $echostr = $_GET['echostr'];
         $is_from_weixin_server = $this->checkSignature();
         if($is_from_weixin_server && $echostr){
             return $echostr;
