@@ -17,15 +17,18 @@ class IndexController
         //验证消息的确来自微信服务器
         $echostr =  !empty($_GET['echostr']) ? $_GET['echostr']:'';
         $is_from_weixin_server = $this->checkSignature();
-        if($is_from_weixin_server){
-            if(!empty($echostr)){
-                //只有第一次接入微信api（配置需要转发请求url）时候微信服务器才传送该字段
-                 return $echostr;
-            }else{
-               //第二次以后处理交互
-                //处理事件推送
-                $this->responseMsg();
-            }
+        if($is_from_weixin_server && $echostr){
+            return $echostr;
+//            if(!empty($echostr)){
+//                //只有第一次接入微信api（配置需要转发请求url）时候微信服务器才传送该字段
+//                 return $echostr;
+//            }else{
+//               //第二次以后处理交互
+//                //处理事件推送
+//                $this->responseMsg();
+//            }
+        }else{
+            $this->responseMsg();
         }
         return view('errors.403');
     }
@@ -41,9 +44,30 @@ class IndexController
         <Event><![CDATA[subscribe]]></Event>
         </xml>
          */
-        $postStr = file_get_contents('php://input');
-//        $postStr = $GLOBALS['HTTP_RAW_POST_DATA'];
+//        $postStr = file_get_contents('php://input');
+        $postStr = $GLOBALS['HTTP_RAW_POST_DATA'];
         $postObj = simplexml_load_string($postStr);
+        if(strtolower($postObj->MsgType) == 'event'){
+            if(strtolower($postObj->Event) == 'subscribe'){
+                //记录关注用户信息（FromUserName），回复用户
+                $toUser = $postObj->FromUserName;
+                $fromUser = $postObj->ToUserName;
+                $createTime = time();
+                $msgType = 'text';
+                $content ='终于等到您！！欢迎关注我们的微信订阅号。';
+
+                $template = "<xml>
+                                <ToUserName><![CDATA[%s]]></ToUserName>
+                                <FromUserName><![CDATA[%s]]></FromUserName>
+                                <CreateTime>%s</CreateTime>
+                                <MsgType><![CDATA[%s]]></MsgType>
+                                <Content><![CDATA[%s]]></Content>
+                            </xml>";
+                $info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
+                echo $info ;
+            }
+        }
+        /**
         //消息类型是event，事件
         if(strtolower($postObj->MsgType) == 'event'){
             //如果是订阅事件
@@ -72,7 +96,7 @@ class IndexController
                 echo $info ;
             }
         }
-
+**/
     }
     //验证是否来自微信服务器
     private function checkSignature()
