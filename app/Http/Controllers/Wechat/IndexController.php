@@ -41,7 +41,8 @@ class IndexController
         <Event><![CDATA[subscribe]]></Event>
         </xml>
          */
-        $postStr = file_get_contents('php://input');
+//        $postStr = file_get_contents('php://input');
+        $postStr = $GLOBALS['HTTP_RAW_POST_DATA'];
         $postObj = simplexml_load_string($postStr);
         //消息类型是event，事件
         if(strtolower($postObj->MsgType == 'event')){
