@@ -19,7 +19,7 @@
         return 'hello hello wlz';
     });
     //TestController
-    Route::resource('test', 'TestController');
+    Route::get('test/test', 'TestController@test');
 
     //UserController
     Route::get('/user/test', 'UserController@test');

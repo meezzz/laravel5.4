@@ -7,6 +7,7 @@
  * Time: 18:58
  */
 namespace   App\Http\Controllers\Wechat;
+use \DB;
 class IndexController
 {
     const TOKEN = '20170925wangliuzheng';
@@ -14,16 +15,69 @@ class IndexController
     //用户发给公众号的消息以及开发者需要的事件推送，将被微信转发到该方法中
     public function index(){
         //验证消息的确来自微信服务器
-        $signature = $_GET["signature"];
-        $timestamp = $_GET["timestamp"];
-        $nonce = $_GET["nonce"];
-        $res = $this->checkSignature($signature,$timestamp,$nonce);
-        if($res)
-            return $_GET['echostr'];
+        $echostr =  !empty($_GET['echostr']) ? $_GET['echostr']:'';
+        $is_from_weixin_server = $this->checkSignature();
+        if($is_from_weixin_server){
+            if(!empty($echostr)){
+                //只有第一次接入微信api（配置需要转发请求url）时候微信服务器才传送该字段
+                 return $echostr;
+            }else{
+               //第二次以后处理交互
+                //处理事件推送
+                $this->responseMsg();
+            }
+        }
+        return view('errors.403');
     }
 
-    private function checkSignature($signature,$timestamp,$nonce)
+    //接收事件推送，并回复
+    public function responseMsg(){
+        /**
+         * <xml>
+        <ToUserName><![CDATA[toUser]]></ToUserName>
+        <FromUserName><![CDATA[FromUser]]></FromUserName>
+        <CreateTime>123456789</CreateTime>
+        <MsgType><![CDATA[event]]></MsgType>
+        <Event><![CDATA[subscribe]]></Event>
+        </xml>
+         */
+        $postStr = file_get_contents('php://input');
+        $postObj = simplexml_load_string($postStr);
+        //消息类型是event，事件
+        if(strtolower($postObj->MsgType == 'event')){
+            //如果是订阅事件
+            if(strtolower($postObj->Event == 'subscribe')){
+                //记录订阅用户
+                $data['open_id'] =  $postObj->FromUserName;
+                $data['app_id'] =  $postObj->ToUserName;
+                $data['is_del'] =  1;
+                $data['created_at'] =  date('Y-m-d H:i:s');
+                DB::table('wechat_user_subscribe')->insert($data);
+                //记录关注用户信息（FromUserName），回复用户
+                $toUser = $postObj->FromUserName;
+                $fromUser = $postObj->ToUserName;
+                $createTime = time();
+                $msgType = 'text';
+                $content ='终于等到您！！欢迎关注我们的微信订阅号。';
+
+                $template = "<xml>
+                                <ToUserName><![CDATA[%s]]></ToUserName>
+                                <FromUserName><![CDATA[%s]]></FromUserName>
+                                <CreateTime>%s</CreateTime>
+                                <MsgType><![CDATA[%s]]></MsgType>
+                                <Content><![CDATA[%s]]></Content>
+                            </xml>";
+                $info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
+                echo $info ;
+            }
+        }
+    }
+    //验证是否来自微信服务器
+    private function checkSignature()
     {
+        $signature =  !empty($_GET['signature']) ? $_GET['signature']:'';
+        $timestamp =  !empty($_GET['timestamp']) ? $_GET['timestamp']:'';
+        $nonce =  !empty($_GET['nonce']) ? $_GET['nonce']:'';
         $token = self::TOKEN;
         $tmpArr = array($token, $timestamp, $nonce);
         sort($tmpArr, SORT_STRING);
