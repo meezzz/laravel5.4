@@ -41,13 +41,13 @@ class IndexController
         <Event><![CDATA[subscribe]]></Event>
         </xml>
          */
-//        $postStr = file_get_contents('php://input');
-        $postStr = $GLOBALS['HTTP_RAW_POST_DATA'];
+        $postStr = file_get_contents('php://input');
+//        $postStr = $GLOBALS['HTTP_RAW_POST_DATA'];
         $postObj = simplexml_load_string($postStr);
         //消息类型是event，事件
-        if(strtolower($postObj->MsgType == 'event')){
+        if(strtolower($postObj->MsgType) == 'event'){
             //如果是订阅事件
-            if(strtolower($postObj->Event == 'subscribe')){
+            if(strtolower($postObj->Event) == 'subscribe'){
                 //记录订阅用户
                 $data['open_id'] =  $postObj->FromUserName;
                 $data['app_id'] =  $postObj->ToUserName;
@@ -72,6 +72,7 @@ class IndexController
                 echo $info ;
             }
         }
+
     }
     //验证是否来自微信服务器
     private function checkSignature()
