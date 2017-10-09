@@ -47,10 +47,11 @@ class IndexController
             $postStr = file_get_contents("php://input");
         }
         $postObj = simplexml_load_string($postStr);
+        $toUser = $postObj->FromUserName;
+        $fromUser = $postObj->ToUserName;
         if(strtolower($postObj->MsgType) == 'event'){
-            $toUser = $postObj->FromUserName;
-            $fromUser = $postObj->ToUserName;
             if(strtolower($postObj->Event) == 'subscribe'){
+                //订阅事件
                 //记录关注用户信息（FromUserName），回复用户
                 $createTime = time();
                 $msgType = 'text';
@@ -64,10 +65,12 @@ class IndexController
                                 <MsgType><![CDATA[%s]]></MsgType>
                                 <Content><![CDATA[%s]]></Content>
                             </xml>";
-                $info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
+                //拼接订阅事件返回给微信服务器的字符串
+                $res_info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
                 //记录新增的订阅用户
                 $open_user_info = WechatUserSubscribe::where('open_id',$toUser)->get();
                 $wechat = new WechatUserSubscribe;
+                //如果从未订阅过，则直接记录新用户。
                 if(!$open_user_info){
                     $wechat->open_id = $toUser;
                     $wechat->server_id = $fromUser;
@@ -81,14 +84,37 @@ class IndexController
                     $wechat->where('open_id',$toUser)->update(['subscribe' => 1]);
                 }
                 exception_log('4:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_subscribe');
-                echo $info ;
+                echo $res_info ;
                 exit;
             }elseif (strtolower($postObj->Event) =='unsubscribe'){
+                //取消订阅事件
                 exception_log('1:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_unsubscribe');
-                //取消订阅
                 $wechat = new WechatUserSubscribe;
                 $wechat->where('open_id',$toUser)->update(['subscribe' => 0]);
+            }elseif(strtolower($postObj->Event) =='location'){
+                //上报地理位置
             }
+        }elseif (strtolower($postObj->MsgType) == 'text'){
+            //接收普通纯文本消息
+            $template = "<xml>
+                        <ToUserName><![CDATA[%s]]></ToUserName>
+                        <FromUserName><![CDATA[%s]]></FromUserName>
+                        <CreateTime>%s</CreateTime>
+                        <MsgType><![CDATA[%s]]></MsgType>
+                        <Content><![CDATA[%s]]></Content>
+                        </xml>";
+            if(strtolower($postObj->Content	) == 'hello'){
+                $createTime = time();
+                $msgType = 'text';
+                $content ='hello sir';
+                exception_log('1:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_text');
+                $res_info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
+                echo $res_info;exit;
+            }
+            /**
+             *
+             */
+
         }
         /**
         //消息类型是event，事件

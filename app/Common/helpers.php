@@ -10,6 +10,11 @@ use \App\Model\ExceptionLog;
          var_dump($info);
     }
 
+/**
+ * @param $content 日志内容
+ * @param $type    日志索引标识
+ * @return bool
+ */
     function exception_log($content,$type){
         $exception_log = new ExceptionLog;
         $exception_log->content = $content;
