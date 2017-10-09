@@ -1,28 +1,27 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Myron
- * Date: 2017/9/25
- * Time: 18:58
- */
-namespace   App\Http\Controllers\Wechat;
-use \DB;
-use \App\Model\Wechat\WechatUserSubscribe;
-class IndexController
+namespace App\Http\Controllers\Wexin;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+class IndexController extends Controller
 {
-    const TOKEN = '20170925wangliuzheng';
-    const APPID = 'wx3f33a35abedfd301';
-    const APP_SECRET='5096d92b62cc9b1e8c9e06554c58ed0f';
+    //
+
+    const TOKEN = 'weixin';
+    const APPID = 'wxcb42df271f31af3d';
+    const APP_SECRET='bd1cb35afb8d1336dc2e1d8dccd38400';
 
     //用户发给公众号的消息以及开发者需要的事件推送，将被微信转发到该方法中
     public function index(){
-        exception_log('index','wechat_index');
         //验证消息的确来自微信服务器
         $echostr = isset($_GET['echostr']) ? $_GET['echostr'] : '';
-        $is_from_wechat_server = $this->checkSignature();
-        exception_log('echostr：'.$echostr.'--is_from_wechat:'.$is_from_wechat_server,'wechat_mp_conf');
-        if($is_from_wechat_server && $echostr){
+        $is_from_wexin_server = $this->checkSignature();
+        $data['echostr']=$echostr;
+        $data['$is_from_wexin_server']=$is_from_wexin_server;
+        exception_log($data,'wexin_mp_conf');
+        if($is_from_wexin_server && $echostr){
             return $echostr;
         }else{
             $this->responseMsg();
@@ -58,8 +57,7 @@ class IndexController
                 $createTime = time();
                 $msgType = 'text';
                 $content ='终于等到您！！欢迎关注我们的微信订阅号。';
-                //日志
-                exception_log('1:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_subscribe');
+
                 $template = "<xml>
                                 <ToUserName><![CDATA[%s]]></ToUserName>
                                 <FromUserName><![CDATA[%s]]></FromUserName>
@@ -70,29 +68,25 @@ class IndexController
                 //拼接订阅事件返回给微信服务器的字符串
                 $res_info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
                 //记录新增的订阅用户
-                $open_user_info = WechatUserSubscribe::where('open_id',$toUser)->get();
-                $wechat = new WechatUserSubscribe;
+                $open_user_info = WexinUserSubscribe::where('open_id',$toUser)->get();
+                $wexin = new WexinUserSubscribe;
                 //如果从未订阅过，则直接记录新用户。
                 if(!$open_user_info){
-                    $wechat->open_id = $toUser;
-                    $wechat->server_id = $fromUser;
-                    $wechat->unsubscribe = 1;
-                    $wechat->created_at = date('Y-m-d H:i:s');
-                    $wechat->updated_at = date('Y-m-d H:i:s');
-                    $wechat->save();
-                    exception_log('2:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_subscribe');
+                    $wexin->open_id = $toUser;
+                    $wexin->server_id = $fromUser;
+                    $wexin->unsubscribe = 1;
+                    $wexin->created_at = date('Y-m-d H:i:s');
+                    $wexin->updated_at = date('Y-m-d H:i:s');
+                    $wexin->save();
                 }else{
-                    exception_log('3:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_subscribe');
-                    $wechat->where('open_id',$toUser)->update(['subscribe' => 1]);
+                    $wexin->where('open_id',$toUser)->update(['subscribe' => 1]);
                 }
-                exception_log('4:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_subscribe');
                 echo $res_info ;
                 exit;
             }elseif (strtolower($postObj->Event) =='unsubscribe'){
                 //取消订阅事件
-                exception_log('1:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_unsubscribe');
-                $wechat = new WechatUserSubscribe;
-                $wechat->where('open_id',$toUser)->update(['subscribe' => 0]);
+                $wexin = new WexinserSubscribe;
+                $wexin->where('open_id',$toUser)->update(['subscribe' => 0]);
             }elseif(strtolower($postObj->Event) =='location'){
                 //上报地理位置
             }
@@ -123,7 +117,6 @@ class IndexController
                 }
                 $createTime = time();
                 $msgType = 'text';
-                exception_log('1:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--content'.$postObj->Content.'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_text');
                 $res_info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
                 echo $res_info;exit;
             }
@@ -131,33 +124,33 @@ class IndexController
         /**
         //消息类型是event，事件
         if(strtolower($postObj->MsgType) == 'event'){
-            //如果是订阅事件
-            if(strtolower($postObj->Event) == 'subscribe'){
-                //记录订阅用户
-                $data['open_id'] =  $postObj->FromUserName;
-                $data['app_id'] =  $postObj->ToUserName;
-                $data['is_del'] =  1;
-                $data['created_at'] =  date('Y-m-d H:i:s');
-                DB::table('wechat_user_subscribe')->insert($data);
-                //记录关注用户信息（FromUserName），回复用户
-                $toUser = $postObj->FromUserName;
-                $fromUser = $postObj->ToUserName;
-                $createTime = time();
-                $msgType = 'text';
-                $content ='终于等到您！！欢迎关注我们的微信订阅号。';
+        //如果是订阅事件
+        if(strtolower($postObj->Event) == 'subscribe'){
+        //记录订阅用户
+        $data['open_id'] =  $postObj->FromUserName;
+        $data['app_id'] =  $postObj->ToUserName;
+        $data['is_del'] =  1;
+        $data['created_at'] =  date('Y-m-d H:i:s');
+        DB::table('wechat_user_subscribe')->insert($data);
+        //记录关注用户信息（FromUserName），回复用户
+        $toUser = $postObj->FromUserName;
+        $fromUser = $postObj->ToUserName;
+        $createTime = time();
+        $msgType = 'text';
+        $content ='终于等到您！！欢迎关注我们的微信订阅号。';
 
-                $template = "<xml>
-                                <ToUserName><![CDATA[%s]]></ToUserName>
-                                <FromUserName><![CDATA[%s]]></FromUserName>
-                                <CreateTime>%s</CreateTime>
-                                <MsgType><![CDATA[%s]]></MsgType>
-                                <Content><![CDATA[%s]]></Content>
-                            </xml>";
-                $info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
-                echo $info ;
-            }
+        $template = "<xml>
+        <ToUserName><![CDATA[%s]]></ToUserName>
+        <FromUserName><![CDATA[%s]]></FromUserName>
+        <CreateTime>%s</CreateTime>
+        <MsgType><![CDATA[%s]]></MsgType>
+        <Content><![CDATA[%s]]></Content>
+        </xml>";
+        $info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
+        echo $info ;
         }
-**/
+        }
+         **/
     }
     //验证是否来自微信服务器
     private function checkSignature()
@@ -165,7 +158,6 @@ class IndexController
         $signature =  !empty($_GET['signature']) ? $_GET['signature']:'';
         $timestamp =  !empty($_GET['timestamp']) ? $_GET['timestamp']:'';
         $nonce =  !empty($_GET['nonce']) ? $_GET['nonce']:'';
-        exception_log('signature:'.$signature.'--timestamp:'.$timestamp.'--nonce:'.$nonce,'wechat_check_signatrue');
         $token = self::TOKEN;
         $tmpArr = array($token, $timestamp, $nonce);
         sort($tmpArr, SORT_STRING);
@@ -177,5 +169,4 @@ class IndexController
             return false;
         }
     }
-
 }

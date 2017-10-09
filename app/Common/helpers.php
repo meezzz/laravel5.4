@@ -25,6 +25,7 @@ use \App\Model\ExceptionLog;
         return  $exception_log->save();
     }
 
+    //get请求
     function http_get($url){
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL,$url);
@@ -45,7 +46,16 @@ use \App\Model\ExceptionLog;
         $appsecret = App\Http\Controllers\Wechat\IndexController::APP_SECRET;
         $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$appid."&secret=".$appsecret;
         $access_token = http_get($url);
-        return $access_token;
+        $access_token = json_decode($access_token,true);
+        return $access_token['access_token'];
+    }
+    //获取微信服务器的ip地址
+    function getWechatServerIp(){
+       $access_token =  getWechatAccessToken();
+       $url = "https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token=".$access_token;
+        $server_ips = http_get($url);
+        $server_ips_arr = json_decode($server_ips,true);
+        return $server_ips_arr['ip_list'];
     }
     /**
      * post请求url，并返回结果

@@ -50,6 +50,11 @@
     Route::any('/wechat', 'Wechat\IndexController@index');
     /**********************   Wechat end  ****************************/
 
+/**********************  测试号 wexin start  ****************************/
+Route::any('/wexin', 'Wexin\IndexController@index');
+/**********************   wexin end  ****************************/
+
+
 
 
 
