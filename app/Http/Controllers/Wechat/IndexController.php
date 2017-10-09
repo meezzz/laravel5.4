@@ -110,6 +110,9 @@ class IndexController
                 case '天气':
                     $content ='天气很好！';
                     break;
+                case '百度':
+                    $content ='<a href="https://www.baidu.com/">百度首页</a>';
+                    break;
                 default:
                     $content ='虽然我很聪明，但是您的问题还是问倒我了。。';
             }
@@ -118,11 +121,6 @@ class IndexController
             exception_log('1:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--content'.$postObj->Content.'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_text');
             $res_info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
             echo $res_info;exit;
-
-            /**
-             *
-             */
-
         }
         /**
         //消息类型是event，事件
