@@ -103,14 +103,22 @@ class IndexController
                         <MsgType><![CDATA[%s]]></MsgType>
                         <Content><![CDATA[%s]]></Content>
                         </xml>";
-            if(strtolower($postObj->Content	) == 'hello'){
-                $createTime = time();
-                $msgType = 'text';
-                $content ='hello sir';
-                exception_log('1:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_text');
-                $res_info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
-                echo $res_info;exit;
+            switch (strtolower($postObj->Content)){
+                case 'hello':
+                    $content ='hello sir';
+                    break;
+                case '天气':
+                    $content ='天气很好！';
+                    break;
+                default:
+                    $content ='虽然我很聪明，但是您的问题还是问倒我了。。';
             }
+            $createTime = time();
+            $msgType = 'text';
+            exception_log('1:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--content'.$postObj->Content.'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_text');
+            $res_info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
+            echo $res_info;exit;
+
             /**
              *
              */
