@@ -12,6 +12,8 @@ use \App\Model\Wechat\WechatUserSubscribe;
 class IndexController
 {
     const TOKEN = '20170925wangliuzheng';
+    const APPID = 'wx3f33a35abedfd301';
+    const APP_SECRET = '5096d92b62cc9b1e8c9e06554c58ed0f';
 
     //用户发给公众号的消息以及开发者需要的事件推送，将被微信转发到该方法中
     public function index(){
@@ -95,32 +97,36 @@ class IndexController
                 //上报地理位置
             }
         }elseif (strtolower($postObj->MsgType) == 'text'){
-            //接收普通纯文本消息
-            $template = "<xml>
+            if(strtolower($postObj->Content) =='图文'){
+
+            }else{
+                //接收普通纯文本消息
+                $template = "<xml>
                         <ToUserName><![CDATA[%s]]></ToUserName>
                         <FromUserName><![CDATA[%s]]></FromUserName>
                         <CreateTime>%s</CreateTime>
                         <MsgType><![CDATA[%s]]></MsgType>
                         <Content><![CDATA[%s]]></Content>
                         </xml>";
-            switch (strtolower($postObj->Content)){
-                case 'hello':
-                    $content ='hello sir';
-                    break;
-                case '天气':
-                    $content ='天气很好！';
-                    break;
-                case '百度':
-                    $content ='<a href="https://www.baidu.com/">百度首页</a>';
-                    break;
-                default:
-                    $content ='虽然我很聪明，但是您的问题还是问倒我了。。';
+                switch (strtolower($postObj->Content)){
+                    case 'hello':
+                        $content ='hello sir';
+                        break;
+                    case '天气':
+                        $content ='天气很好！';
+                        break;
+                    case '百度':
+                        $content ='<a href="https://www.baidu.com/">百度首页</a>';
+                        break;
+                    default:
+                        $content ='虽然我很聪明，但是您的问题还是问倒我了。。';
+                }
+                $createTime = time();
+                $msgType = 'text';
+                exception_log('1:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--content'.$postObj->Content.'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_text');
+                $res_info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
+                echo $res_info;exit;
             }
-            $createTime = time();
-            $msgType = 'text';
-            exception_log('1:msgtype:'.strtolower($postObj->Event).'--event:'.strtolower($postObj->Event).'--content'.$postObj->Content.'--openid:'.$toUser.'--serverid:'.$fromUser,'wechat_text');
-            $res_info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
-            echo $res_info;exit;
         }
         /**
         //消息类型是event，事件
