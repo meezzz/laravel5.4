@@ -29,12 +29,14 @@ use \App\Model\ExceptionLog;
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $output = curl_exec($ch);
-        curl_close($ch);
         if(curl_errno($ch)){
             exception_log(curl_error($ch),'curl_get_errror');
+            curl_close($ch);
             return false;
         }
+        curl_close($ch);
         return $output;
     }
     //获取微信access_token
