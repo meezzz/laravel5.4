@@ -14,7 +14,7 @@ class IndexController extends Controller
     const APP_SECRET='bd1cb35afb8d1336dc2e1d8dccd38400';
 
     //用户发给公众号的消息以及开发者需要的事件推送，将被微信转发到该方法中
-    public function index(){echo 1;die;
+    public function index(){
         $is_from_wexin_server = $this->checkSignature();
         //验证消息的确来自微信服务器
         if($is_from_wexin_server ){
