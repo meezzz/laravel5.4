@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Wexin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Model\Wexin\WexinUserSubscribe;
 class IndexController extends Controller
 {
     //
