@@ -17,11 +17,15 @@ class IndexController
 
     //用户发给公众号的消息以及开发者需要的事件推送，将被微信转发到该方法中
     public function index(){
-        exception_log('index','wechat_index');
         //验证消息的确来自微信服务器
         $echostr = isset($_GET['echostr']) ? $_GET['echostr'] : '';
         $is_from_wechat_server = $this->checkSignature();
-        exception_log('echostr：'.$echostr.'--is_from_wechat:'.$is_from_wechat_server,'wechat_mp_conf');
+        $content=array(
+            'is_from_wexin_server'=>$is_from_wechat_server,
+            'echostr' => $echostr,
+            'get'=>$_GET
+        );
+        exception_log($content,'wechat_index');
         if($is_from_wechat_server && $echostr){
             return $echostr;
         }else{
