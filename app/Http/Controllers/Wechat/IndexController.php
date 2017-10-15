@@ -80,7 +80,7 @@ class IndexController
                 if(!$open_user_info){
                     $wechat->open_id = $toUser;
                     $wechat->server_id = $fromUser;
-                    $wechat->unsubscribe = 1;
+                    $wechat->subscribe = 1;
                     $wechat->created_at = date('Y-m-d H:i:s');
                     $wechat->updated_at = date('Y-m-d H:i:s');
                     $wechat->save();

@@ -216,7 +216,7 @@ class IndexController extends Controller
                 if(!$open_user_info){
                     $weixin->open_id = $toUser;
                     $weixin->server_id = $fromUser;
-                    $weixin->unsubscribe = 1;
+                    $weixin->subscribe = 1;
                     $weixin->created_at = date('Y-m-d H:i:s');
                     $weixin->updated_at = date('Y-m-d H:i:s');
                     $weixin->save();

@@ -14,20 +14,20 @@ class TestController extends Controller
     public function test(){
         \DB::connection()->enableQueryLog(); // 开启查询日志
         //记录新增的订阅用户
-        $toUser = 'o5SzjwQaPgSjDD9w4DvPgteOjJD0';
-        $fromUser = 'gh_62be1c4590a3';
-        $open_user_info = WeixinUserSubscribe::where('open_id',$toUser)->get();
-        $wexin = new WeixinUserSubscribe;
+        $toUser = 'a';
+        $fromUser = 'b';
+        $open_user_info = WeixinUserSubscribe::where('open_id',$toUser)->first();var_dump($open_user_info);
+        $weixin = new WeixinUserSubscribe;
         //如果从未订阅过，则直接记录新用户。
-        if(!$open_user_info){
-            $wexin->open_id = $toUser;
-            $wexin->server_id = $fromUser;
-            $wexin->unsubscribe = 1;
-            $wexin->created_at = date('Y-m-d H:i:s');
-            $wexin->updated_at = date('Y-m-d H:i:s');
-            $wexin->save();
+        if(!$open_user_info ){
+            $weixin->open_id = $toUser;
+            $weixin->server_id = $fromUser;
+            $weixin->subscribe = 1;
+            $weixin->created_at = date('Y-m-d H:i:s');
+            $weixin->updated_at = date('Y-m-d H:i:s');
+            $weixin->save();
         }else{
-            $wexin->where('open_id',$toUser)->update(['subscribe' => 1]);
+            $weixin->where('open_id',$toUser)->update(['subscribe' => 1]);
         }
         $queries = \DB::getQueryLog();
         dd($queries);
