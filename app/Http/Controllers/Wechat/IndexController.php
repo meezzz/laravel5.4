@@ -52,7 +52,9 @@ class IndexController
         if(empty($postStr)){
             $postStr = file_get_contents("php://input");
         }
+        exception_log(['posttr'=>$postStr],'wechat_response_test1');
         $postObj = simplexml_load_string($postStr);
+        exception_log(['posobj'=>$postStr],'wechat_response_test1');
         $toUser = $postObj->FromUserName;
         $fromUser = $postObj->ToUserName;
         if(strtolower($postObj->MsgType) == 'event'){
