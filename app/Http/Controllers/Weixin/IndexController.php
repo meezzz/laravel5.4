@@ -55,7 +55,7 @@ class IndexController extends Controller
         }
         exception_log(['posttr'=>$postStr],'weixin_response_test1');
         $postObj = simplexml_load_string($postStr);
-        exception_log(['postObj'=>$postObj],'weixin_response_test2');
+        exception_log(['postObj'=>$postObj->FromUserName],'weixin_response_test2');
         $toUser = $postObj->FromUserName;
         $fromUser = $postObj->ToUserName;
         $exlog_content=array(
