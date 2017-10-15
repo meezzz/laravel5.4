@@ -52,6 +52,7 @@ class IndexController extends Controller
         if(empty($postStr)){
             $postStr = file_get_contents("php://input");
         }
+        exception_log('11','weixin_response_test');
         $postObj = simplexml_load_string($postStr);
         $toUser = $postObj->FromUserName;
         $fromUser = $postObj->ToUserName;
@@ -68,7 +69,7 @@ class IndexController extends Controller
                 //记录关注用户信息（FromUserName），回复用户
                 $createTime = time();
                 $msgType = 'text';
-                $content ='终于等到您！！欢迎关注我们的微信订阅号。';
+                $content ='终于等到您啦啦啦！！！。';
 
                 $template = "<xml>
                                 <ToUserName><![CDATA[%s]]></ToUserName>
