@@ -210,7 +210,7 @@ class IndexController extends Controller
                 //拼接订阅事件返回给微信服务器的字符串
                 $res_info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
                 //记录新增的订阅用户
-                $open_user_info = WeixinUserSubscribe::where('open_id',$toUser)->get();
+                $open_user_info = WeixinUserSubscribe::where('open_id',$toUser)->first();
                 $weixin = new WeixinUserSubscribe;
                 //如果从未订阅过，则直接记录新用户。
                 if(!$open_user_info){
