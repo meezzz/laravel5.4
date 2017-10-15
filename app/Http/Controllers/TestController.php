@@ -12,6 +12,7 @@ class TestController extends Controller
 {
     //测试方法
     public function test(){
+        \DB::connection()->enableQueryLog(); // 开启查询日志
         //记录新增的订阅用户
         $toUser = 'o5SzjwQaPgSjDD9w4DvPgteOjJD0';
         $fromUser = 'gh_62be1c4590a3';
