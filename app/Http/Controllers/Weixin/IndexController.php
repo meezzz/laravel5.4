@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Wexin;
+namespace App\Http\Controllers\Weixin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Wexin\WexinUserSubscribe;
+use \App\Model\Weixin\WeixinUserSubscribe;
 class IndexController extends Controller
 {
     //
@@ -72,9 +72,14 @@ class IndexController extends Controller
                             </xml>";
                 //拼接订阅事件返回给微信服务器的字符串
                 $res_info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
+                $exlog_content=array(
+                    'res_info'=>$res_info,
+                    'event' =>$postObj->Event
+                );
+                exception_log($exlog_content,'weixin_subscribe_1');
                 //记录新增的订阅用户
-                $open_user_info = WexinUserSubscribe::where('open_id',$toUser)->get();
-                $wexin = new WexinUserSubscribe;
+                $open_user_info = WeixinUserSubscribe::where('open_id',$toUser)->get();
+                $wexin = new WeixinUserSubscribe;
                 //如果从未订阅过，则直接记录新用户。
                 if(!$open_user_info){
                     $wexin->open_id = $toUser;
@@ -90,7 +95,7 @@ class IndexController extends Controller
                 exit;
             }elseif (strtolower($postObj->Event) =='unsubscribe'){
                 //取消订阅事件
-                $wexin = new WexinserSubscribe;
+                $wexin = new WeixinUserSubscribe;
                 $wexin->where('open_id',$toUser)->update(['subscribe' => 0]);
             }elseif(strtolower($postObj->Event) =='location'){
                 //上报地理位置
