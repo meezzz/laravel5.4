@@ -55,6 +55,13 @@ class IndexController extends Controller
         $postObj = simplexml_load_string($postStr);
         $toUser = $postObj->FromUserName;
         $fromUser = $postObj->ToUserName;
+        $exlog_content=array(
+            'toUser'=>$toUser,
+            'fromUser'=>$fromUser,
+            'event' =>$postObj->Event,
+            'MsgType'=>$postObj->Event
+        );
+        exception_log($exlog_content,'weixin_response');
         if(strtolower($postObj->MsgType) == 'event'){
             if(strtolower($postObj->Event) == 'subscribe'){
                 //订阅事件
