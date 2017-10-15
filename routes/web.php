@@ -51,7 +51,7 @@
     /**********************   Wechat end  ****************************/
 
 /**********************  测试号 wexin start  ****************************/
-Route::any('/wexin', 'Wexin\IndexController@index');
+Route::any('/weixin', 'Weixin\IndexController@index');
 /**********************   wexin end  ****************************/
 
 
