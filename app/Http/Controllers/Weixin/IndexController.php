@@ -53,8 +53,8 @@ class IndexController extends Controller
         if(empty($postStr)){
             $postStr = file_get_contents("php://input");
         }
-        exception_log('11','weixin_response_test');
         $postObj = simplexml_load_string($postStr);
+        exception_log(['postObj'=>$postObj],'weixin_response_test');
         $toUser = $postObj->FromUserName;
         $fromUser = $postObj->ToUserName;
         $exlog_content=array(
