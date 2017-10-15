@@ -19,16 +19,19 @@ class IndexController extends Controller
         //验证消息的确来自微信服务器
         if($is_from_wexin_server ){
             $echostr = !empty($_GET['echostr']) ? $_GET['echostr'] : '';
-            $content['is_from_wexin_server'] = $is_from_wexin_server;
-            $content['echostr'] = $echostr;
-            exception_log($content,'weixin_check_signature');
+
+            $content=array(
+                'is_from_wexin_server'=>$is_from_wexin_server,
+                'echostr' => $echostr,
+            );
+            exception_log($content,'weixin_index');
             if($echostr){
                 return $echostr;
             }else{
                 $this->responseMsg();
             }
         }
-        return '';
+        return 'No access';
     }
 
     //接收事件推送，并回复
@@ -161,16 +164,19 @@ class IndexController extends Controller
         $timestamp =  !empty($_GET['timestamp']) ? $_GET['timestamp']:'';
         $nonce =  !empty($_GET['nonce']) ? $_GET['nonce']:'';
 
-        $content['signature'] = $signature;
-        $content['timestamp'] = $timestamp;
-        $content['nonce'] = $nonce;
-        $content['signature'] = $signature;
-        exception_log($content,'weixin_check_signature');
+
         $token = self::TOKEN;
         $tmpArr = array($token, $timestamp, $nonce);
         sort($tmpArr, SORT_STRING);
         $tmpStr = implode( $tmpArr );
         $tmpStr = sha1( $tmpStr );
+        $content=array(
+            'signature'=>$signature,
+            'timestamp'=> $timestamp,
+            'nonce'=> $nonce,
+            'tmpstr'=>$tmpStr
+        );
+        exception_log($content,'weixin_check_signature');
         if( $tmpStr == $signature )
             return true;
         return false;
