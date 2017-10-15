@@ -54,7 +54,7 @@ class IndexController
         }
         exception_log(['posttr'=>$postStr],'wechat_response_test1');
         $postObj = simplexml_load_string($postStr);
-        exception_log(['posobj'=>$postObj],'wechat_response_test2');
+        exception_log(['posobj'=>$postObj->FromUserName],'wechat_response_test2');
         $toUser = $postObj->FromUserName;
         $fromUser = $postObj->ToUserName;
         if(strtolower($postObj->MsgType) == 'event'){
