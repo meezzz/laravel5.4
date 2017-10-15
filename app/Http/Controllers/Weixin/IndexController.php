@@ -22,7 +22,8 @@ class IndexController extends Controller
 
             $content=array(
                 'is_from_wexin_server'=>$is_from_wexin_server,
-                'echostr' => $echostr
+                'echostr' => $echostr,
+                'get'=>$_GET
             );
             exception_log($content,'weixin_index');
             if($echostr){
