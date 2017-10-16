@@ -34,4 +34,12 @@ class TestController extends Controller
         exit;
     }
 
+    public function curltest(){
+        $crontablog= new \App\Model\CrontabLog;
+        $crontablog->task_id = 1;
+        $crontablog->task_name = 'curl crontab test';
+        $crontablog->created_at =date('Y-m-d H:i:s');
+        $crontablog->save();
+    }
+
 }

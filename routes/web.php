@@ -50,9 +50,12 @@
     Route::any('/wechat', 'Wechat\IndexController@index');
     /**********************   Wechat end  ****************************/
 
-/**********************  测试号 wexin start  ****************************/
-Route::any('/weixin', 'Weixin\IndexController@index');
-/**********************   wexin end  ****************************/
+    /**********************  测试号 wexin start  ****************************/
+    Route::any('/weixin', 'Weixin\IndexController@index');
+    /**********************   wexin end  ****************************/
+
+    //curl定时任务测试
+    Route::any('/curltest', 'TestController@curltest');
 
 
 
