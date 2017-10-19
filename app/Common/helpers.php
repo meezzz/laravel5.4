@@ -25,20 +25,38 @@ use \App\Model\ExceptionLog;
         return  $exception_log->save();
     }
 
-    //get请求
-    function http_get($url){
+/**
+ * @param $url 接口url string
+ * @param string $type 请求类型
+ * @param string $res_type 请求返回数据类型格式
+ * @param string $arr  post请求参数
+ * @return string
+ */
+    function http_curl($url,$type='get',$res_type='json',$arr=''){
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        if($type=='post'){
+            curl_setopt($ch,CURLOPT_POST,1);
+            curl_setopt($ch,CURLOPT_POSTFIELDS,$arr);
+        }
         $output = curl_exec($ch);
         if(curl_errno($ch)){
             exception_log(curl_error($ch),'curl_get_errror');
-            curl_close($ch);
-            return false;
+        }
+        $return = '';
+        if($res_type=='json'){
+            if(curl_errno($ch)){
+                $return =  curl_error($ch);
+            }else{
+                $return =  json_decode($output,true);
+            }
+        }elseif ($res_type=='xml'){
+
         }
         curl_close($ch);
-        return $output;
+        return $return ;
     }
     //获取微信access_token
     function getWechatAccessToken(){
@@ -49,6 +67,7 @@ use \App\Model\ExceptionLog;
         $access_token = json_decode($access_token,true);
         return $access_token['access_token'];
     }
+
     //获取微信服务器的ip地址
     function getWechatServerIp(){
        $access_token =  getWechatAccessToken();
@@ -121,3 +140,5 @@ use \App\Model\ExceptionLog;
             return false;
         }
     }
+
+

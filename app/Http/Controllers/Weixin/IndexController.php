@@ -5,13 +5,27 @@ namespace App\Http\Controllers\Weixin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use \App\Model\Weixin\WeixinUserSubscribe;
+use Illuminate\Support\Facades\Redis;
 class IndexController extends Controller
 {
-    //
+    //微信测试账号
 
     const TOKEN = 'weixin';
     const APPID = 'wxcb42df271f31af3d';
     const APP_SECRET='bd1cb35afb8d1336dc2e1d8dccd38400';
+    const APP_NAME = 'weixintest';
+    public $click_key_conf = array(
+        0=>[
+            'huochepiao'=>self::APP_NAME.'_huochepiao',
+            'feijipiao'=>self::APP_NAME.'_feijipiao'
+        ],
+        1=>[
+
+        ],
+        2=>[
+
+        ]
+    );
 
     //用户发给公众号的消息以及开发者需要的事件推送，将被微信转发到该方法中
     public function index(){
@@ -35,154 +49,9 @@ class IndexController extends Controller
         return 'No access';
     }
 
-    //接收事件推送，并回复
-//    public function responseMsg(){
-//        /**
-//         * <xml>
-//        <ToUserName><![CDATA[toUser]]></ToUserName>
-//        <FromUserName><![CDATA[FromUser]]></FromUserName>
-//        <CreateTime>123456789</CreateTime>
-//        <MsgType><![CDATA[event]]></MsgType>
-//        <Event><![CDATA[subscribe]]></Event>
-//        </xml>
-//         */
-//        $postStr = null;
-//        if(isset($GLOBALS['HTTP_RAW_POST_DATA'])){
-//            $postStr = $GLOBALS['HTTP_RAW_POST_DATA'];
-//        }
-//        if(empty($postStr)){
-//            $postStr = file_get_contents("php://input");
-//        }
-//        exception_log(['posttr'=>$postStr],'weixin_response_test1');
-//        $postObj = simplexml_load_string($postStr);
-//        exception_log(['postObj'=>$postObj->FromUserName],'weixin_response_test2');
-//        $toUser = $postObj->FromUserName;
-//        $fromUser = $postObj->ToUserName;
-//        $exlog_content=array(
-//            'toUser'=>$toUser,
-//            'fromUser'=>$fromUser,
-//            'event' =>$postObj->Event,
-//            'MsgType'=>$postObj->Event
-//        );
-//        exception_log($exlog_content,'weixin_response');
-//        if(strtolower($postObj->MsgType) == 'event'){
-//            if(strtolower($postObj->Event) == 'subscribe'){
-//                //订阅事件
-//                //记录关注用户信息（FromUserName），回复用户
-//                $createTime = time();
-//                $msgType = 'text';
-//                $content ='终于等到您啦啦啦！！！。';
-//
-//                $template = "<xml>
-//                                <ToUserName><![CDATA[%s]]></ToUserName>
-//                                <FromUserName><![CDATA[%s]]></FromUserName>
-//                                <CreateTime>%s</CreateTime>
-//                                <MsgType><![CDATA[%s]]></MsgType>
-//                                <Content><![CDATA[%s]]></Content>
-//                            </xml>";
-//                //拼接订阅事件返回给微信服务器的字符串
-//                $res_info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
-//                $exlog_content=array(
-//                    'res_info'=>$res_info,
-//                    'event' =>$postObj->Event
-//                );
-//                exception_log($exlog_content,'weixin_subscribe_1');
-//                //记录新增的订阅用户
-//                $open_user_info = WeixinUserSubscribe::where('open_id',$toUser)->get();
-//                $wexin = new WeixinUserSubscribe;
-//                //如果从未订阅过，则直接记录新用户。
-//                if(!$open_user_info){
-//                    $wexin->open_id = $toUser;
-//                    $wexin->server_id = $fromUser;
-//                    $wexin->unsubscribe = 1;
-//                    $wexin->created_at = date('Y-m-d H:i:s');
-//                    $wexin->updated_at = date('Y-m-d H:i:s');
-//                    $wexin->save();
-//                }else{
-//                    $wexin->where('open_id',$toUser)->update(['subscribe' => 1]);
-//                }
-//                echo $res_info ;
-//                exit;
-//            }elseif (strtolower($postObj->Event) =='unsubscribe'){
-//                //取消订阅事件
-//                $wexin = new WeixinUserSubscribe;
-//                $wexin->where('open_id',$toUser)->update(['subscribe' => 0]);
-//            }elseif(strtolower($postObj->Event) =='location'){
-//                //上报地理位置
-//            }
-//        }elseif (strtolower($postObj->MsgType) == 'text'){
-//            if(strtolower($postObj->Content) =='图文'){
-//
-//            }else{
-//                //接收普通纯文本消息
-//                $template = "<xml>
-//                        <ToUserName><![CDATA[%s]]></ToUserName>
-//                        <FromUserName><![CDATA[%s]]></FromUserName>
-//                        <CreateTime>%s</CreateTime>
-//                        <MsgType><![CDATA[%s]]></MsgType>
-//                        <Content><![CDATA[%s]]></Content>
-//                        </xml>";
-//                switch (strtolower($postObj->Content)){
-//                    case 'hello':
-//                        $content ='hello sir';
-//                        break;
-//                    case '天气':
-//                        $content ='天气很好！';
-//                        break;
-//                    case '百度':
-//                        $content ='<a href="https://www.baidu.com/">百度首页</a>';
-//                        break;
-//                    default:
-//                        $content ='虽然我很聪明，但是您的问题还是问倒我了。。';
-//                }
-//                $createTime = time();
-//                $msgType = 'text';
-//                $res_info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
-//                echo $res_info;exit;
-//            }
-//        }
-//        /**
-//        //消息类型是event，事件
-//        if(strtolower($postObj->MsgType) == 'event'){
-//        //如果是订阅事件
-//        if(strtolower($postObj->Event) == 'subscribe'){
-//        //记录订阅用户
-//        $data['open_id'] =  $postObj->FromUserName;
-//        $data['app_id'] =  $postObj->ToUserName;
-//        $data['is_del'] =  1;
-//        $data['created_at'] =  date('Y-m-d H:i:s');
-//        DB::table('wechat_user_subscribe')->insert($data);
-//        //记录关注用户信息（FromUserName），回复用户
-//        $toUser = $postObj->FromUserName;
-//        $fromUser = $postObj->ToUserName;
-//        $createTime = time();
-//        $msgType = 'text';
-//        $content ='终于等到您！！欢迎关注我们的微信订阅号。';
-//
-//        $template = "<xml>
-//        <ToUserName><![CDATA[%s]]></ToUserName>
-//        <FromUserName><![CDATA[%s]]></FromUserName>
-//        <CreateTime>%s</CreateTime>
-//        <MsgType><![CDATA[%s]]></MsgType>
-//        <Content><![CDATA[%s]]></Content>
-//        </xml>";
-//        $info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
-//        echo $info ;
-//        }
-//        }
-//         **/
-//    }
+
     //接收事件推送，并回复
     public function responseMsg(){
-        /**
-         * <xml>
-        <ToUserName><![CDATA[toUser]]></ToUserName>
-        <FromUserName><![CDATA[FromUser]]></FromUserName>
-        <CreateTime>123456789</CreateTime>
-        <MsgType><![CDATA[event]]></MsgType>
-        <Event><![CDATA[subscribe]]></Event>
-        </xml>
-         */
         $postStr = null;
         if(isset($GLOBALS['HTTP_RAW_POST_DATA'])){
             $postStr = $GLOBALS['HTTP_RAW_POST_DATA'];
@@ -229,8 +98,12 @@ class IndexController extends Controller
                 //取消订阅事件
                 $weixin = new WeixinUserSubscribe;
                 $weixin->where('open_id',$toUser)->update(['subscribe' => 0]);
-            }elseif(strtolower($postObj->Event) =='location'){
-                //上报地理位置
+            }elseif (strtolower($postObj->Event) =='click'){
+                //事件是自定义菜单栏的click事件
+                $click_key_conf = $this->click_key_conf;
+                if(strtolower($postObj->EventKey) ==$click_key_conf[0]['huochepiao']){
+
+                }
             }
         }elseif (strtolower($postObj->MsgType) == 'text'){
             if(strtolower($postObj->Content) =='图文'){
@@ -263,37 +136,119 @@ class IndexController extends Controller
                 echo $res_info;exit;
             }
         }
-        /**
-        //消息类型是event，事件
-        if(strtolower($postObj->MsgType) == 'event'){
-        //如果是订阅事件
-        if(strtolower($postObj->Event) == 'subscribe'){
-        //记录订阅用户
-        $data['open_id'] =  $postObj->FromUserName;
-        $data['app_id'] =  $postObj->ToUserName;
-        $data['is_del'] =  1;
-        $data['created_at'] =  date('Y-m-d H:i:s');
-        DB::table('wechat_user_subscribe')->insert($data);
-        //记录关注用户信息（FromUserName），回复用户
-        $toUser = $postObj->FromUserName;
-        $fromUser = $postObj->ToUserName;
-        $createTime = time();
-        $msgType = 'text';
-        $content ='终于等到您！！欢迎关注我们的微信订阅号。';
-
-        $template = "<xml>
-        <ToUserName><![CDATA[%s]]></ToUserName>
-        <FromUserName><![CDATA[%s]]></FromUserName>
-        <CreateTime>%s</CreateTime>
-        <MsgType><![CDATA[%s]]></MsgType>
-        <Content><![CDATA[%s]]></Content>
-        </xml>";
-        $info = sprintf($template,$toUser,$fromUser,$createTime,$msgType,$content);
-        echo $info ;
-        }
-        }
-         **/
     }
+
+    //自定义微信菜单栏
+    public function defindItem(){
+        //目前微信接口的调用方式都是通过curl get/post
+        $access_token = $this->getWeixinAccessToken();
+        $url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$access_token;
+        $post_arr = array(
+            'button'=>array(
+                //第1个一级菜单
+                array(
+                    'type'=>'click',
+                    'name'=>urlencode('火车机票'),
+                    'sub_button'=>array(
+                        array(
+                            'type'=>'view',
+                            'name'=>urlencode('百度搜索'),
+                            'url' =>'http://www.baidu.com/'
+                        ),
+                        array(
+                            'type'=>'click',
+                            'name'=>urlencode('火车票'),
+                            'key'=>$this->click_key_conf[0]['huochepiao']
+                        ),
+                        array(
+                            'type'=>'click',
+                            'name'=>urlencode('飞机票'),
+                            'key'=>$this->click_key_conf[0]['feijipiao']
+                        )
+                    )
+                ),
+                //第2个一级菜单
+                array(
+                    'type'=>'view',
+                    'name'=>urlencode('网易云音乐'),
+                    'url'=>'http://music.163.com/m/'
+                ),
+
+                //第3个一级菜单
+                array(
+                    'type'=>'view',
+                    'name'=>urlencode('糗事百科'),
+                    'url'=>'https://www.qiushibaike.com/'
+                )
+            ),
+        );
+        $post_json = urldecode(json_encode($post_arr));
+        $res = http_curl($url,'post','json',$post_json);
+       return $res;
+    }
+
+    //群发接口
+    public function sendMsgAll(){
+        //1：获得全局accesstoken
+        $access_token = $this->getWeixinAccessToken();
+        //2：组装群发数据数组
+        $msg_arr = array(
+            'touser'=>'o0JjWw6iwk3WJuzm3o5zRkfpPYQ4',
+            'msgtype'=>'text',
+            'text'=>array(
+                'content'=>'This is Group sent message'
+            )
+        );
+        //3：将数组转换成json
+        $msg_json = \GuzzleHttp\json_encode($msg_arr);
+        //4：调用curl发送
+        $url = 'https://api.weixin.qq.com/cgi-bin/message/mass/preview?access_token='.$access_token;
+        $res = http_curl($url,'post','json',$msg_json);
+        return $res;
+    }
+
+    //获取用户的openid
+    public function getUserBaseInfo(){
+        //1：获取code
+        $redirect_uri = urlencode('http://laravel.supwlz.ml/weixin/getUserOpenId');
+        $url='https://open.weixin.qq.com/connect/oauth2/authorize?appid='.self::APPID.'&redirect_uri='.$redirect_uri.'&response_type=code&scope=snsapi_base&state=123#wechat_redirect';
+        \Symfony\Component\Debug\header('location:'.$url);
+    }
+    public function getUserOpenId(){
+        //通过code换取网页授权access_token
+        $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.self::APPID.'&secret='.self::APP_SECRET.'&code='.$_GET['code'].'&grant_type=authorization_code';
+        $res = http_curl($url,'get');
+        dd($res);
+    }
+
+
+
+    /*************************    private  *********************************/
+    //获取微信服务器的ip地址
+    public function getWeixinServerIp(){
+        $access_token =  $this->getWeixinAccessToken();
+        $url = "https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token=".$access_token;
+        $server_ips = http_curl($url);
+        $server_ips_arr = json_decode($server_ips,true);
+        return $server_ips_arr['ip_list'];
+    }
+    //获取测试号微信access_token
+    public function getWeixinAccessToken(){
+        $access_token_key = $this->getWeixinAccessTokenRedisKey();
+        $access_token = Redis::get($access_token_key);
+        if(!empty($access_token))
+            return $access_token;
+        $appid =self::APPID;
+        $appsecret = self::APP_SECRET;
+        $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$appid."&secret=".$appsecret;
+        $access_token = http_curl($url,'get','json');
+        Redis::set($access_token_key,$access_token['access_token']);
+        //过期时间为返回的存活时间-60秒
+        Redis::expire($access_token_key, $access_token['expires_in']-60);
+        //存储到redis中
+        return $access_token['access_token'];
+    }
+
     //验证是否来自微信服务器
     private function checkSignature()
     {
@@ -317,5 +272,9 @@ class IndexController extends Controller
         if( $tmpStr == $signature )
             return true;
         return false;
+    }
+
+    private function getWeixinAccessTokenRedisKey(){
+        return self::APPID.'_'.self::APP_SECRET.'_accessstoken';
     }
 }
