@@ -196,7 +196,7 @@ class IndexController extends Controller
             'touser'=>'o0JjWw6iwk3WJuzm3o5zRkfpPYQ4',
             'msgtype'=>'text',
             'text'=>array(
-                'content'=>'This is Group sent message'
+                'content'=>'This is Group sent message!!!'
             )
         );
         //3：将数组转换成json
@@ -218,6 +218,7 @@ class IndexController extends Controller
         //通过code换取网页授权access_token
         $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.self::APPID.'&secret='.self::APP_SECRET.'&code='.$_GET['code'].'&grant_type=authorization_code';
         $res = http_curl($url,'get');
+        exception_log($res,'weixin_getUserOpenId');
         dd($res);
     }
 
