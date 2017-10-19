@@ -54,7 +54,9 @@
     Route::any('/weixin', 'Weixin\IndexController@index');
     Route::any('/weixin/sendMsgAll', 'Weixin\IndexController@sendMsgAll');
     Route::any('/weixin/getUserBaseInfo', 'Weixin\IndexController@getUserBaseInfo');
-    /**********************   wexin end  ****************************/
+    Route::any('/weixin/getUserOpenId', 'Weixin\IndexController@getUserOpenId');
+
+/**********************   wexin end  ****************************/
 
     //curl定时任务测试
     Route::any('/curltest', 'TestController@curltest');
