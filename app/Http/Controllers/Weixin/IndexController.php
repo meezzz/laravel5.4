@@ -212,7 +212,7 @@ class IndexController extends Controller
         //1：获取code
         $redirect_uri = urlencode('http://laravel.supwlz.ml/weixin/getUserOpenId');
         $url='https://open.weixin.qq.com/connect/oauth2/authorize?appid='.self::APPID.'&redirect_uri='.$redirect_uri.'&response_type=code&scope=snsapi_base&state=123#wechat_redirect';
-        \Symfony\Component\Debug\header('location:'.$url);
+        header('location:'.$url);
     }
     public function getUserOpenId(){
         //通过code换取网页授权access_token

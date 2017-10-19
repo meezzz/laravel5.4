@@ -53,7 +53,7 @@
     /**********************  测试号 wexin start  ****************************/
     Route::any('/weixin', 'Weixin\IndexController@index');
     Route::any('/weixin/sendMsgAll', 'Weixin\IndexController@sendMsgAll');
-    Route::any('/weixin/getUserOpenId', 'Weixin\IndexController@getUserOpenId');
+    Route::any('/weixin/getUserBaseInfo', 'Weixin\IndexController@getUserBaseInfo');
     /**********************   wexin end  ****************************/
 
     //curl定时任务测试
