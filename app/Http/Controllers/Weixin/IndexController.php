@@ -219,7 +219,20 @@ class IndexController extends Controller
         $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.self::APPID.'&secret='.self::APP_SECRET.'&code='.$_GET['code'].'&grant_type=authorization_code';
         $res = http_curl($url,'get');
         exception_log($res,'weixin_getUserOpenId');
-        dd($res);
+        $login_model = new \App\Model\Weixin\WeixinWebPageAuthorizationLogin;
+        $open_user_info =$login_model->where('openid',$res['openid'])->first();
+        //如果从未订阅过，则直接记录新用户。
+        if(!$open_user_info){
+            $login_model->openid = $res['openid'];
+            $login_model->scope = $res['scope'];
+            $login_model->access_token =$res['access_token'];
+            $login_model->refresh_token =$res['refresh_token'];
+            $login_model->created_at = date('Y-m-d H:i:s');
+            $login_model->updated_at = date('Y-m-d H:i:s');
+            $login_model->save();
+        }else{
+            $login_model->where('open_id',$toUser)->update(['subscribe' => 1]);
+        }
     }
 
 
