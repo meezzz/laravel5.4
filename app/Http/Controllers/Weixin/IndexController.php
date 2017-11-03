@@ -234,10 +234,38 @@ class IndexController extends Controller
             $login_model->where('open_id',$toUser)->update(['subscribe' => 1]);
         }
     }
+    //JS-SDK
+    //微信分享
+    public function shareWx(){
+        $jsapi_ticket = $this->getWeixinJsApiTicket();
+        $timestamp = time();
+        $nonceStr = getRandomString(16);
+        $url = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        $signature = sha1("jsapi_ticket=".$jsapi_ticket."&noncestr=".$nonceStr."&timestamp=".$timestamp."&url=".$url);
+        $info['name']= '微信JS-SDK测试';
+        $info['appid']= self::APPID;
+        $info['timestamp']= $timestamp;
+        $info['nonceStr']= $nonceStr;
+        $info['signature']= $signature;
+        return view('weixin.sharewx', ['info' => $info]);
+    }
 
-
-
-    /*************************    private  *********************************/
+    //微信jsapi_ticket
+    public function getWeixinJsApiTicket(){
+        $jsapi_ticket_key = $this->getWeixinJsApiTicketRedisKey();
+        $jsapi_ticket = Redis::get($jsapi_ticket_key);
+        if(!empty($jsapi_ticket))
+            return $jsapi_ticket;
+        $access_token = $this->getWeixinAccessToken();
+        //获取jsapi_ticket
+        $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=".$access_token."&type=wx_card";
+        $jsapi_ticket = http_curl($url,'get','json');
+        Redis::set($jsapi_ticket_key,$jsapi_ticket['ticket']);
+        //过期时间为返回的存活时间-60秒
+        Redis::expire($jsapi_ticket_key, $jsapi_ticket['expires_in']-60);
+        //存储到redis中
+        return $jsapi_ticket['ticket'];
+    }
     //获取微信服务器的ip地址
     public function getWeixinServerIp(){
         $access_token =  $this->getWeixinAccessToken();
@@ -262,6 +290,8 @@ class IndexController extends Controller
         //存储到redis中
         return $access_token['access_token'];
     }
+
+    /*************************    private  *********************************/
 
     //验证是否来自微信服务器
     private function checkSignature()
@@ -288,6 +318,9 @@ class IndexController extends Controller
         return false;
     }
 
+    private function getWeixinJsApiTicketRedisKey(){
+        return self::APPID.'_'.self::APP_SECRET.'_jsapi_ticket';
+    }
     private function getWeixinAccessTokenRedisKey(){
         return self::APPID.'_'.self::APP_SECRET.'_accessstoken';
     }

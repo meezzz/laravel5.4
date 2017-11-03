@@ -141,4 +141,18 @@ use \App\Model\ExceptionLog;
         }
     }
 
+    /**生成固定长度的随机字符串
+     * @param $len 长度
+     * @return string
+     */
+    function getRandomString($len){
+        $str="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $randomStr = "";
+        for($i=0;$i<$len;$i++)
+        {
+            $randomStr .= $str{mt_rand(0,strlen($str)-1)};    //生成php随机数
+        }
+        return $randomStr;
+    }
+
 

@@ -55,6 +55,7 @@
     Route::any('/weixin/sendMsgAll', 'Weixin\IndexController@sendMsgAll');
     Route::any('/weixin/getUserBaseInfo', 'Weixin\IndexController@getUserBaseInfo');
     Route::any('/weixin/getUserOpenId', 'Weixin\IndexController@getUserOpenId');
+    Route::any('/weixin/shareWx', 'Weixin\IndexController@shareWx');
 
 /**********************   wexin end  ****************************/
 
