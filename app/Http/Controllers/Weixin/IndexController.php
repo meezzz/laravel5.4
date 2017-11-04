@@ -241,9 +241,9 @@ class IndexController extends Controller
         $timestamp = time();
         $nonceStr = getRandomString(16);
         $url = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-        $signature = "jsapi_ticket=".$jsapi_ticket."&noncestr=".$nonceStr."&timestamp=".$timestamp."&url=".$url;
-        $info['signature']= $signature;
-        $signature = sha1($signature);
+        $signature_str = "jsapi_ticket=".$jsapi_ticket."&noncestr=".$nonceStr."&timestamp=".$timestamp."&url=".$url;
+        $info['signature_str']= $signature_str;
+        $signature = sha1($signature_str);
         $info['name']= '微信JssS-SDK测试';
         $info['appid']= self::APPID;
         $info['timestamp']= $timestamp;
