@@ -250,7 +250,7 @@ class IndexController extends Controller
         $info['signature']= $signature;
 
         $info['jsapi_ticket']= $jsapi_ticket;
-        $info['url']= 'http://laravel.supwlz.ml/weixin/shareWx';
+        $info['url']= $url;
         $info['signature_str']= $signature_str;
         exception_log($info,'weixin_sharewx');
         return view('weixin.sharewx', ['info' => $info]);
@@ -264,7 +264,7 @@ class IndexController extends Controller
             return $jsapi_ticket;
         $access_token = $this->getWeixinAccessToken();
         //获取jsapi_ticket
-        $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=".$access_token."&type=wx_card";
+        $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=".$access_token."&type=jsapi";
         $jsapi_ticket = http_curl($url,'get','json');
         Redis::set($jsapi_ticket_key,$jsapi_ticket['ticket']);
         //过期时间为返回的存活时间-60秒
