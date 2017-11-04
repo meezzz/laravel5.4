@@ -250,7 +250,7 @@ class IndexController extends Controller
         $info['signature']= $signature;
 
         $info['jsapi_ticket']= $jsapi_ticket;
-        $info['url']= $url;
+        $info['url']= 'http://laravel.supwlz.ml/weixin/shareWx';
         $info['signature_str']= $signature_str;
         exception_log($info,'weixin_sharewx');
         return view('weixin.sharewx', ['info' => $info]);
