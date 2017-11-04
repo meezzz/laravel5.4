@@ -241,7 +241,9 @@ class IndexController extends Controller
         $timestamp = time();
         $nonceStr = getRandomString(16);
         $url = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-        $signature = sha1("jsapi_ticket=".$jsapi_ticket."&noncestr=".$nonceStr."&timestamp=".$timestamp."&url=".$url);
+        $signature = "jsapi_ticket=".$jsapi_ticket."&noncestr=".$nonceStr."&timestamp=".$timestamp."&url=".$url;
+        $info['signature']= $signature;
+        $signature = sha1($signature);
         $info['name']= '微信JssS-SDK测试';
         $info['appid']= self::APPID;
         $info['timestamp']= $timestamp;
@@ -250,6 +252,7 @@ class IndexController extends Controller
 
         $info['jsapi_ticket']= $jsapi_ticket;
         $info['url']= $url;
+
         return view('weixin.sharewx', ['info' => $info]);
     }
 
