@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>微信JS-SDK</title>
-    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script  src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 </head>
 <body>
     {{ $info['name'] }}
