@@ -15,8 +15,9 @@
             nonceStr: '{{ $info["nonceStr"] }}', // 必填，生成签名的随机串
             signature: '{{ $info["signature"] }}',// 必填，签名，见附录1
             jsApiList: [
-                'onMenuShareAppMessage',
-                'onMenuShareAppMessage',
+                'onMenuShareTimeline',//分享到朋友圈
+                'onMenuShareAppMessage', //分享给朋友
+                'chooseImage',//拍照或从手机相册中选图接口
                 'menuItem:share:appMessage',
                 'menuItem:share:timeline',
             ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
@@ -54,11 +55,23 @@
                     alert('取消成功');
                 }
             });
+
         });
 
         wx.error(function(res){
             // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
         });
+        function chooseImage() {
+            wx.chooseImage({
+                count: 1, // 默认9
+                sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                success: function (res) {
+                    var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                }
+            });
+        }
     </script>
+    <button onclick="chooseImage()">选择图片</button>
 </body>
 </html>
