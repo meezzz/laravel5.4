@@ -6,11 +6,13 @@
     <script  src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 </head>
 <body>
-    {{ $info['name'] }}----
-    {{ $info['appid'] }}-------
-    {{ $info['nonceStr'] }}----
-    {{ $info['signature'] }}----
-    {{ $info["timestamp"] }}
+    name:{{ $info['name'] }}----
+    appid:{{ $info['appid'] }}-------
+    nonceStr:{{ $info['nonceStr'] }}----
+    signature:{{ $info['signature'] }}----
+    timestamp:{{ $info["timestamp"] }}-----
+    jsapi_ticket:{{ $info["jsapi_ticket"] }}-----
+    url:{{ $info["url"] }}-----
     <script>
         wx.config({
             debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。

@@ -247,6 +247,9 @@ class IndexController extends Controller
         $info['timestamp']= $timestamp;
         $info['nonceStr']= $nonceStr;
         $info['signature']= $signature;
+
+        $info['jsapi_ticket']= $jsapi_ticket;
+        $info['url']= $url;
         return view('weixin.sharewx', ['info' => $info]);
     }
 
